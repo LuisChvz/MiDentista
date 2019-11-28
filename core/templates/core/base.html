@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +24,10 @@
 
 	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css">
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	  <link rel="stylesheet" type="text/css" href=" {% static 'css/base.css'%}">
+	  
+	<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+	<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+
 	</head>
 
 	<body >
@@ -86,14 +90,57 @@
 					</div>
 				</li>
 				{% endif %}
+
 				{% if request.user.is_superuser %}
 				<li>
 					<a href="#">
-					<i class="tim-icons icon-calendar-60"></i>
-					<p>Citas</p>
+						<i class="tim-icons icon-calendar-60"></i>
+						<p>Citas</p>
 					</a>
 				</li>
 				{% endif %}
+				
+				{% if request.user.is_superuser %}
+					<li class="nav-item">
+						<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2" aria-expanded="true" aria-controls="collapsePages">
+							<i class="tim-icons icon-notes"></i>
+							<span>Tratamientos</span>
+						</a>
+						<div id="collapsePages2" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+							<div class="py-2 collapse-inner rounded">
+								<ul>
+
+									<a href="#" class="nav-item">
+										<i class="tim-icons icon-simple-add"></i>
+										<p>Agregar</p>
+									</a>
+									<a href="#" class="nav-item">
+										<i class="tim-icons icon-pencil"></i>
+										<p>Administrar</p>
+									</a>
+
+								</ul>
+							</div>
+						</div>
+					</li>
+				{% else %}
+					<li>
+						<a href="#">
+							<i class="tim-icons icon-notes"></i>
+							<p>Tratamientos</p>
+						</a>
+					</li>
+				{% endif %}
+
+				{% if request.user.is_superuser %}
+					<li>
+						<a href="{% url 'logout' %}">
+						<i class="tim-icons icon-camera-18"></i>
+						<p>Agregar publicación</p>
+						</a>
+					</li>
+				{% endif %}
+
 				{% if request.user.is_superuser %}
 				<li class="nav-item">
 					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="true" aria-controls="collapsePages">
@@ -104,12 +151,12 @@
 						<div class="py-2 collapse-inner rounded">
 							<ul>
 								<a href='#' class="nav-item">
-									<i class="tim-icons icon-pencil"></i>
-									<p>Editar Usuario</p>
-								</a>
-								<a href='#' class="nav-item">
 									<i class="tim-icons icon-simple-add"></i>
 									<p>Agregar Usuario</p>
+								</a>
+								<a href='#' class="nav-item">
+									<i class="tim-icons icon-pencil"></i>
+									<p>Editar Usuario</p>
 								</a>
 							</ul>
 						</div>

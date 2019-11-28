@@ -3,6 +3,7 @@ from django.core.validators import MinValueValidator
 from django.db import models
 import decimal
 from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
 
 class Especialidad(models.Model):
     id = models.AutoField(primary_key=True)
@@ -59,7 +60,7 @@ class Cita(models.Model):
 class Publicacion(models.Model):
     id = models.AutoField(primary_key=True)
     titulo = models.CharField(max_length=128)
-    descripcion = models.CharField(max_length=512)
+    descripcion = RichTextField()
     created = models.DateField(auto_now=True)
     image = models.ImageField()
     
