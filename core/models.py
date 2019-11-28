@@ -4,16 +4,17 @@ from django.db import models
 import decimal
 from django.contrib.auth.models import User
 
-class Especializacion(models.Model):
+class Especialidad(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=64)
 
 class Dentista(models.Model):
     id = models.AutoField(primary_key=True)
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
-    especializacion = models.ForeignKey(Especializacion, on_delete=models.CASCADE)
+    especializacion = models.ForeignKey(Especialidad, on_delete=models.CASCADE)
     telefono = models.IntegerField()
     correo = models.EmailField(unique=True)
+    is_dentist = models.BooleanField(default=True)
     
 class Medicamento(models.Model):
     id = models.AutoField(primary_key=True)

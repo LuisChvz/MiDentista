@@ -23,7 +23,7 @@
 
 	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css">
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	  
+	  <link rel="stylesheet" type="text/css" href=" {% static 'css/base.css'%}">
 	</head>
 
 	<body >
@@ -37,6 +37,7 @@
 	        </div>
 	        <ul class="nav">
 
+			{% if request.user.is_superuser %}
 				<li class="nav-item">
 					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
 						<i class="tim-icons icon-zoom-split"></i>
@@ -60,6 +61,8 @@
 						</div>
 					</div>
 				</li>
+			{% endif %}
+			{% if request.user.is_superuser %}
 				<li class="nav-item">
 					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2" aria-expanded="true" aria-controls="collapsePages">
 						<i class="tim-icons icon-badge"></i>
@@ -82,12 +85,16 @@
 						</div>
 					</div>
 				</li>
+				{% endif %}
+				{% if request.user.is_superuser %}
 				<li>
 					<a href="#">
 					<i class="tim-icons icon-calendar-60"></i>
 					<p>Citas</p>
 					</a>
 				</li>
+				{% endif %}
+				{% if request.user.is_superuser %}
 				<li class="nav-item">
 					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="true" aria-controls="collapsePages">
 						<i class="tim-icons icon-single-02"></i>
@@ -108,21 +115,22 @@
 						</div>
 					</div>
 				</li>
-				
-				<li>
-					<a href="#">
-					<i class="tim-icons icon-button-power"></i>
-					<p>Cerrar Sesión</p>
-					</a>
-				</li>
-			  
-				<li>
-					<a href="{% url 'login' %}">
-					<i class="tim-icons icon-button-power"></i>
-					<p>Iniciar Sesión</p>
-					</a>
-				</li>
-			  
+				{% endif %}
+				{% if request.user.is_authenticated %}
+					<li>
+						<a href="{% url 'logout' %}">
+						<i class="tim-icons icon-button-power"></i>
+						<p>Cerrar Sesión</p>
+						</a>
+					</li>
+				{% else %}
+					<li>
+						<a href="{% url 'login' %}">
+						<i class="tim-icons icon-button-power"></i>
+						<p>Iniciar Sesión</p>
+						</a>
+					</li>
+				{% endif %}
 	        </ul>
 	      </div>
 	    </div>
