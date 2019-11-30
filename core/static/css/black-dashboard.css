@@ -1612,7 +1612,7 @@ fieldset[disabled] .btn-link.active {
 }
 
 .form-control::-webkit-input-placeholder {
-  color: rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.5);
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -2224,7 +2224,7 @@ textarea {
 .card h5,
 .card h6,
 .card p {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(0, 0, 0, 0.8);
 }
 
 h1,
@@ -2906,7 +2906,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
 }
 
 .navbar.bg-white .form-control {
-  color: #222a42 !important;
+  color: #000000 !important;
 }
 
 .navbar.bg-white .form-control::placeholder {

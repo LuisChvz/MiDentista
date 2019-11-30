@@ -24,9 +24,6 @@
 
 	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css">
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	  
-	<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
-	<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 
 	</head>
 
@@ -102,15 +99,15 @@
 				
 				{% if request.user.is_superuser %}
 					<li class="nav-item">
-						<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2" aria-expanded="true" aria-controls="collapsePages">
+						<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages3" aria-expanded="true" aria-controls="collapsePages">
 							<i class="tim-icons icon-notes"></i>
 							<span>Tratamientos</span>
 						</a>
-						<div id="collapsePages2" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+						<div id="collapsePages3" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
 							<div class="py-2 collapse-inner rounded">
 								<ul>
 
-									<a href="#" class="nav-item">
+									<a href="{% url 'core:nuevotratamiento' %}" class="nav-item">
 										<i class="tim-icons icon-simple-add"></i>
 										<p>Agregar</p>
 									</a>
@@ -134,7 +131,7 @@
 
 				{% if request.user.is_superuser %}
 					<li>
-						<a href="{% url 'logout' %}">
+						<a href="{% url 'core:nuevapublicacion' %}">
 						<i class="tim-icons icon-camera-18"></i>
 						<p>Agregar publicación</p>
 						</a>

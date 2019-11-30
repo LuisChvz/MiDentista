@@ -3,7 +3,7 @@ from django.core.validators import MinValueValidator
 from django.db import models
 import decimal
 from django.contrib.auth.models import User
-from ckeditor.fields import RichTextField
+
 
 class Especialidad(models.Model):
     id = models.AutoField(primary_key=True)
@@ -27,7 +27,7 @@ class Tratamiento(models.Model):
     descripcion = models.CharField(max_length=512)
     precio = models.DecimalField(max_digits=3, decimal_places=2)
     descuento = models.DecimalField(max_digits=2, decimal_places=2)
-    precioNeto = models.DecimalField(max_digits=3, decimal_places=2)
+    precioNeto = models.DecimalField(max_digits=6, decimal_places=2)
     
 class Paciente(models.Model):
     id = models.AutoField(primary_key=True)
@@ -60,7 +60,7 @@ class Cita(models.Model):
 class Publicacion(models.Model):
     id = models.AutoField(primary_key=True)
     titulo = models.CharField(max_length=128)
-    descripcion = RichTextField()
+    descripcion = models.CharField(max_length=1024)
     created = models.DateField(auto_now=True)
-    image = models.ImageField()
+    image = models.FileField(upload_to='uploads/')
     
