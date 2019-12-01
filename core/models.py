@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from django.contrib import admin
 from django.core.validators import MinValueValidator
 from django.db import models
 import decimal
@@ -26,8 +27,8 @@ class Tratamiento(models.Model):
     nombre = models.CharField(max_length=64)
     descripcion = models.CharField(max_length=512)
     precio = models.DecimalField(max_digits=3, decimal_places=2)
-    descuento = models.DecimalField(max_digits=2, decimal_places=2)
-    precioNeto = models.DecimalField(max_digits=6, decimal_places=2)
+    descuento = models.DecimalField(max_digits=2, decimal_places=2, default=0)
+    precioNeto = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     
 class Paciente(models.Model):
     id = models.AutoField(primary_key=True)
@@ -52,15 +53,21 @@ class Cita(models.Model):
     id = models.AutoField(primary_key=True)
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
     dentista = models.ForeignKey(Dentista, on_delete=models.CASCADE)
-    tratamiento = models.ForeignKey(Tratamiento, on_delete=models.CASCADE)
+    tratamiento = models.ForeignKey(Tratamiento, on_delete=models.CASCADE, null=True)
     hora = models.TimeField()
     fecha = models.DateField()
-    informe = models.CharField(max_length=1024)
+    informe = models.CharField(max_length=1024, default="No se ha agregado informe.")
     
 class Publicacion(models.Model):
     id = models.AutoField(primary_key=True)
     titulo = models.CharField(max_length=128)
     descripcion = models.CharField(max_length=1024)
     created = models.DateField(auto_now=True)
-    image = models.FileField(upload_to='uploads/')
+    image = models.ImageField(upload_to='post/%Y/%m/%D/', null=True, blank=True)
     
+    
+
+admin.site.register(Publicacion)
+admin.site.register(Especialidad)
+admin.site.register(Dentista)
+admin.site.register(Medicamento)

@@ -27,7 +27,7 @@ class NuevaEspecialidadForm(forms.ModelForm):
             'nombre': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Nombre: '}),
         }
         labels = {
-            'nombre':'Nombre'
+            'nombre':''
         }
 
 class NuevoMedicamentoForm(forms.ModelForm):
@@ -39,7 +39,7 @@ class NuevoMedicamentoForm(forms.ModelForm):
             'nombre': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Nombre: '}),
         }
         labels = {
-            'nombre':'Nombre'
+            'nombre':''
         }
 
 class NuevoTratamientoForm(forms.ModelForm):
@@ -53,7 +53,7 @@ class NuevoTratamientoForm(forms.ModelForm):
             'precio': forms.NumberInput(attrs={'class':'form-control', 'placeholder':'Precio: '}),
         }
         labels = {
-            'nombre':'Nombre',
-            'descripcion':'Descripcion',
-            'precio':'Precio'
+            'nombre':'',
+            'descripcion':'',
+            'precio':''
         }

@@ -348,7 +348,7 @@ Copyright (c) 2015 Daniel Eden
   position: relative;
   overflow: hidden;
   margin: 4px 1px;
-  border-radius: 0.4285rem;
+  border-radius: 2rem;
   padding: 11px 40px;
   cursor: pointer;
   animation: rotation 0.3s infinite;
@@ -1626,7 +1626,7 @@ fieldset[disabled] .btn-link.active {
 .form-control {
   border-color: #2b3553;
   background-color: transparent;
-  border-radius: 0.4285rem;
+  border-radius: 1rem;
   color: rgba(0, 0, 0, 0.8);
   line-height: normal;
   font-size: 0.8571em;
@@ -2252,7 +2252,7 @@ h1,
   font-size: 2.0625rem;
   font-weight: 400;
   line-height: 1.05;
-  margin-bottom: 30px;
+
 }
 
 h1 small,
@@ -4693,7 +4693,7 @@ table.tablesorter thead tr .headerSortDown {
 }
 
 .card label {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .card .card-body {
