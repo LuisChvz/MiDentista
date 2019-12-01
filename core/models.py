@@ -26,9 +26,20 @@ class Tratamiento(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=64)
     descripcion = models.CharField(max_length=512)
-    precio = models.DecimalField(max_digits=3, decimal_places=2)
-    descuento = models.DecimalField(max_digits=2, decimal_places=2, default=0)
+    precio = models.DecimalField(max_digits=6, decimal_places=2)
+    descuento = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     precioNeto = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    
+    def CalcularPN(self, descuento, precio, id):
+        tratamiento = Tratamiento.objects.get(id=id)
+        tratamiento.precioNeto = precio * [decimal.Decimal(1) - descuento/decimal.Decimal(100)]
+        tratamiento.save()
+        
+class Promocion(models.Model):
+    id = models.AutoField(primary_key=True)
+    producto = models.ForeignKey(Tratamiento, on_delete=models.CASCADE, blank=True, null=True)
+    descripcion = models.CharField(max_length=512)
+    descuento = models.DecimalField(max_digits=2, decimal_places=2, default=0)
     
 class Paciente(models.Model):
     id = models.AutoField(primary_key=True)
@@ -71,3 +82,9 @@ admin.site.register(Publicacion)
 admin.site.register(Especialidad)
 admin.site.register(Dentista)
 admin.site.register(Medicamento)
+admin.site.register(Tratamiento)
+admin.site.register(Promocion)
+admin.site.register(Paciente)
+admin.site.register(Alergia)
+admin.site.register(Receta)
+admin.site.register(Cita)
