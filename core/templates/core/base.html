@@ -42,7 +42,7 @@
 				<li class="nav-item">
 					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
 						<i class="tim-icons icon-zoom-split"></i>
-						<span>Dentistas</span>
+						<p><font size=2>Dentistas</font></p>
 					</a>
 					<div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
 						<div class="py-2 collapse-inner rounded">
@@ -71,7 +71,7 @@
 				<li class="nav-item">
 					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2" aria-expanded="true" aria-controls="collapsePages">
 						<i class="tim-icons icon-badge"></i>
-						<span>Pacientes</span>
+						<p><font size=2>Pacientes</font></p>
 					</a>
 					<div id="collapsePages2" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
 						<div class="py-2 collapse-inner rounded">
@@ -96,7 +96,7 @@
 				<li>
 					<a href="#">
 						<i class="tim-icons icon-calendar-60"></i>
-						<p>Citas</p>
+						<p><font size=2>Citas</font></p>
 					</a>
 				</li>
 				{% endif %}
@@ -105,7 +105,7 @@
 					<li class="nav-item">
 						<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages3" aria-expanded="true" aria-controls="collapsePages">
 							<i class="tim-icons icon-notes"></i>
-							<span>Servicios</span>
+							<p><font size=2>Servicios</font></p>
 						</a>
 						<div id="collapsePages3" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
 							<div class="py-2 collapse-inner rounded">
@@ -132,17 +132,35 @@
 					<li>
 						<a href="#">
 							<i class="tim-icons icon-notes"></i>
-							<p>Servicios</p>
+							<p><font size=2>Servicios</font></p>
 						</a>
 					</li>
 				{% endif %}
 
 				{% if request.user.is_superuser %}
-					<li>
-						<a href="{% url 'core:nuevapublicacion' %}">
-						<i class="tim-icons icon-camera-18"></i>
-						<p>Agregar publicación</p>
+					<li class="nav-item">
+						<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages5" aria-expanded="true" aria-controls="collapsePages">
+							<i class="tim-icons icon-send"></i>
+							<p><font size=2>Blog</font></p>
 						</a>
+						<div id="collapsePages5" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+							<div class="py-2 collapse-inner rounded">
+								<ul>
+									<a href="{% url 'core:nuevapublicacion' %}" class="nav-item">
+										<i class="tim-icons icon-camera-18"></i>
+										<p>Estado</p>
+									</a>
+									<a href="{% url 'core:nuevapromocion' %}" class="nav-item">
+										<i class="tim-icons icon-shape-star"></i>
+										<p>Promoción</p>
+									</a>
+									<a href="{% url 'core:blog' %}" class="nav-item">
+										<i class="tim-icons icon-pencil"></i>
+										<p>Administrar</p>
+									</a>
+								</ul>
+							</div>
+						</div>
 					</li>
 				{% endif %}
 
@@ -150,7 +168,7 @@
 				<li class="nav-item">
 					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="true" aria-controls="collapsePages">
 						<i class="tim-icons icon-single-02"></i>
-						<span>Usuario</span>
+						<p><font size=2>Usuario</font></p>
 					</a>
 					<div id="collapsePages1" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
 						<div class="py-2 collapse-inner rounded">
@@ -172,14 +190,14 @@
 					<li>
 						<a href="{% url 'logout' %}">
 						<i class="tim-icons icon-button-power"></i>
-						<p>Cerrar Sesión</p>
+						<p><font size=2>Cerrar Sesión</font></p>
 						</a>
 					</li>
 				{% else %}
 					<li>
 						<a href="{% url 'login' %}">
 						<i class="tim-icons icon-button-power"></i>
-						<p>Iniciar Sesión</p>
+						<p><font size=2>Iniciar Sesión</font></p>
 						</a>
 					</li>
 				{% endif %}

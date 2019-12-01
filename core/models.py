@@ -22,24 +22,32 @@ class Medicamento(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=64)
     
-class Tratamiento(models.Model):
+class Categoria(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=64)
+    
+class Tratamiento(models.Model):
+    id = models.AutoField(primary_key=True)
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=64)
     descripcion = models.CharField(max_length=512)
-    precio = models.DecimalField(max_digits=6, decimal_places=2)
-    descuento = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-    precioNeto = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    precio = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(0)])
+    precioNeto = models.DecimalField(max_digits=6, decimal_places=2, default=0, validators=[MinValueValidator(0)],)
     
     def CalcularPN(self, descuento, precio, id):
         tratamiento = Tratamiento.objects.get(id=id)
-        tratamiento.precioNeto = precio * [decimal.Decimal(1) - descuento/decimal.Decimal(100)]
+        tratamiento.precioNeto = precio * (decimal.Decimal(1) - descuento/decimal.Decimal(100))
         tratamiento.save()
         
 class Promocion(models.Model):
     id = models.AutoField(primary_key=True)
-    producto = models.ForeignKey(Tratamiento, on_delete=models.CASCADE, blank=True, null=True)
+    tratamiento = models.ForeignKey(Tratamiento, on_delete=models.CASCADE, blank=True, null=True)
+    titulo = models.CharField(max_length=64)
     descripcion = models.CharField(max_length=512)
-    descuento = models.DecimalField(max_digits=2, decimal_places=2, default=0)
+    descuento = models.DecimalField(max_digits=5, decimal_places=2, default=0, validators=[MinValueValidator(0)])
+    image = models.ImageField(upload_to='promo/%Y/%m/%D/', null=True, blank=True)
+    created = models.DateField(auto_now=True)
+
     
 class Paciente(models.Model):
     id = models.AutoField(primary_key=True)
@@ -64,7 +72,7 @@ class Cita(models.Model):
     id = models.AutoField(primary_key=True)
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
     dentista = models.ForeignKey(Dentista, on_delete=models.CASCADE)
-    tratamiento = models.ForeignKey(Tratamiento, on_delete=models.CASCADE, null=True)
+    tratamiento = models.ForeignKey(Tratamiento, on_delete=models.CASCADE, null=True, blank=True)
     hora = models.TimeField()
     fecha = models.DateField()
     informe = models.CharField(max_length=1024, default="No se ha agregado informe.")
@@ -83,6 +91,7 @@ admin.site.register(Especialidad)
 admin.site.register(Dentista)
 admin.site.register(Medicamento)
 admin.site.register(Tratamiento)
+admin.site.register(Categoria)
 admin.site.register(Promocion)
 admin.site.register(Paciente)
 admin.site.register(Alergia)

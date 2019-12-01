@@ -4,16 +4,16 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from braces.views import SuperuserRequiredMixin, LoginRequiredMixin
 from django.utils.decorators import method_decorator
-from .models import Publicacion, Especialidad, Tratamiento, Medicamento
-from .forms import NuevaPublicacionForm, NuevoMedicamentoForm, NuevaEspecialidadForm, NuevoTratamientoForm
+from .models import Publicacion, Especialidad, Tratamiento, Medicamento, Promocion
+from .forms import NuevaPublicacionForm, NuevoMedicamentoForm, NuevaEspecialidadForm, NuevoTratamientoForm, NuevaPromocionForm
 
 def home(request):
-    publicaciones = Publicacion.objects.filter().order_by('-id')[:5]
-    cantidad = Publicacion.objects.filter().count()
+    promociones = Promocion.objects.filter().order_by('-id')[:5]
+    cantidad = Promocion.objects.filter().count()
     post = Publicacion.objects.all().order_by('-id')
     ps = []
     i=0
-    for p in publicaciones:
+    for p in promociones:
         ps.append(p)
         i = i + 1
         
@@ -47,6 +47,13 @@ class NuevaPublicacion(SuperuserRequiredMixin, CreateView):
     form_class = NuevaPublicacionForm
     success_url = reverse_lazy('home')
     
+def Blog(request):
+    promociones = Promocion.objects.all()
+    publicaciones = Publicacion.objects.all()
+    
+    return render(request, "core/blog.html", {'publicaciones':publicaciones, 'promociones':promociones})
+    
+    
 class NuevaEspecialidad(SuperuserRequiredMixin, CreateView):
     model = Especialidad
     form_class = NuevaEspecialidadForm
@@ -74,4 +81,23 @@ def NuevoTratamiento(request):
         form = NuevoTratamientoForm()
     
     return render(request, 'core/tratamiento_form.html', {'form':form})
+
+def NuevaPromocion(request):
+    if request.method == 'POST':
+        form = NuevaPromocionForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            
+            ultima = Promocion.objects.latest('id')
+            
+            instancia = Tratamiento()
+            instancia.CalcularPN(ultima.descuento, ultima.tratamiento.precio, ultima.tratamiento.id)
+            
+            return redirect('home')
+    else:
+        form = NuevaPromocionForm()
+    
+    return render(request, 'core/promocion_form.html', {'form':form})
+
+
     

@@ -1,0 +1,118 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %} Administrar blog{% endblock %}
+
+{% block content %}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-6">
+			<div class="card white-content">
+              	<div class="card-header">
+              		<h1>Publicaciones</h1>
+				</div>
+
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table tablesorter " id="">
+							<thead class=" text-primary">
+
+								<th>
+									<h4>ID</h4>
+								</th>
+								<th>
+									<h4>Titulo</h4>
+								</th>
+								<th>
+									<h4>Fecha</h4>
+								</th>
+								<th>
+
+								</th>
+							</thead>
+							<tbody>
+							
+								{% for publicacion in publicaciones %}
+									<tr>
+
+										<td>
+											<p>{{publicacion.id}}</p>
+										</td>
+										<td>
+											<p>{{publicacion.titulo}}</p>
+										</td>
+										<td>
+											<p>{{publicacion.created}}</p>
+										</td>
+										<td>
+
+										</td>
+									</tr>
+
+								{% endfor %}
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="card white-content">
+				<div class="card-header">
+					<h1>Promociones</h1>
+				</div>
+
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table tablesorter " id="">
+							<thead class=" text-primary">
+
+								<th>
+									<h4>ID</h4>
+								</th>
+								<th>
+									<h4>Titulo</h4>
+								</th>
+								<th>
+									<h4>Fecha</h4>
+								</th>
+								<th>
+
+								</th>
+							</thead>
+							<tbody>
+								
+								{% for promocion in promociones %}
+									<tr>
+
+										<td>
+											<p>{{promocion.id}}</p>
+										</td>
+										<td>
+											<p>{{promocion.titulo}}</p>
+										</td>
+										<td>
+											<p>{{promocion.created}}</p>
+										</td>
+										<td>
+
+										</td>
+									</tr>
+								{% endfor %}
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>		  
+
+
+    
+
+{% endblock %}
