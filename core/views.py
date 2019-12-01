@@ -100,4 +100,52 @@ def NuevaPromocion(request):
     return render(request, 'core/promocion_form.html', {'form':form})
 
 
+class TratamientoList(ListView):
+    model = Tratamiento
+    template_name = 'core/tratamiento_list.html'
+
+class MedicamentoList(ListView):
+    model = Medicamento
+    template_name = 'core/medicamento_list.html'
+
+class EspecialidadList(ListView):
+    model = Especialidad
+    template_name = 'core/especialidad_list.html'
+
+class TratamientoUpdate(LoginRequiredMixin, UpdateView):
+    model = Tratamiento
+    template_name = 'core/tratamiento_update.html'
+    form_class = NuevoTratamientoForm
+    success_url = reverse_lazy('core:tratamientos')
+
+class MedicamentoUpdate(LoginRequiredMixin, UpdateView):
+    model = Medicamento
+    template_name = 'core/medicamento_update.html'
+    form_class = NuevoMedicamentoForm
+    success_url = reverse_lazy('core:medicamentos')
+
+class EspecialidadUpdate(LoginRequiredMixin, UpdateView):
+    model = Especialidad
+    template_name = 'core/especialidad_update.html'
+    form_class = NuevaEspecialidadForm
+    success_url = reverse_lazy('core:especialidades')
+
+class TratamientoDelete(LoginRequiredMixin, DeleteView):
+    model = Tratamiento
+    template_name= "core/tratamiento_delete.html"
+    success_url = reverse_lazy('core:tratamientos')
+
+
+class MedicamentoDelete(LoginRequiredMixin, DeleteView):
+    model = Medicamento
+    template_name= "core/medicamento_delete.html"
+    success_url = reverse_lazy('core:medicamentos')
+
+class EspecialidadDelete(LoginRequiredMixin, DeleteView):
+    model = Especialidad
+    template_name= "core/especualidad_delete.html"
+    success_url = reverse_lazy('core:especialidades')
+
+
+
     

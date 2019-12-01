@@ -1,0 +1,53 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %} Tratamientos {% endblock %}
+
+{% block content %}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-11">
+			<div class="card white-content">
+              	<div class="card-header">
+              		<h1>Tratamientos</h1>
+				</div>
+				<div align=center>
+
+				<div class="card-body">
+				 
+				{% for tratamiento in tratamiento_list|dictsort:'nombre'  %}
+					  <div class="col-md-6">
+					<div class="card white-content">
+						<div class="card-body">	
+							
+ 						 							
+							<h1 align=center>{{tratamiento.nombre}}</h1>
+							<a href="{% url 'core:tratamientoupdate' tratamiento.id|slugify%}" class="nav-item">
+                              <i class="tim-icons icon-pencil" style= "color:black"></i>                            
+                               </a> 							
+							<a href= "{% url 'core:tratamientodelete' tratamiento.id|slugify%}">
+                              <i class="tim-icons icon-trash-simple" style= "color:black"></i>                            
+                               </a> 							
+							<hr>
+							<p align=justify><font size=3>{{tratamiento.descripcion}}</font></p>
+							<hr>											
+							<p align=right><font size=3 color= red>${{tratamiento.precio}}</font></p>
+						</div>
+					</div>
+				</div>
+				  {% endfor %}
+                     
+                   
+				</div>
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>		  
+
+
+    
+
+{% endblock %}

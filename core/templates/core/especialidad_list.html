@@ -1,0 +1,77 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %} Especialidades {% endblock %}
+
+{% block content %}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-11">
+			<div class="card white-content">
+              	<div class="card-header">
+              		<h1>Especialidades</h1>
+                  <a href="{% url 'core:nuevaespecialidad' %}" class="nav-item">
+										<i class="tim-icons icon-simple-add"></i>
+										Agregar Especialidad
+									</a>
+				</div>
+
+				<div class="card-body">
+					 <div class="table-responsive">
+                  <table class="table tablesorter " id="">
+                  <thead class=" text-primary">
+                      <th>
+                        
+                      </th>
+                      <th>
+                        <h4>Id</h4>
+                      </th>
+                      <th>
+                        <h4>Nombre</h4>
+                      </th>
+                      <th>
+                        
+                      </th>
+                    </thead>
+				   
+                    
+                    <tbody>
+                    {% for especialidad in especialidad_list|dictsort:'id' %}
+                       
+                            <td>
+                        
+                            </td>
+                            <td >
+                              <p><b><font size="4">{{especialidad.id}}</font></b></p>
+                            </td>
+                            <td >
+                              <p><b><font size="4">{{especialidad.nombre}}</font></b></p>
+                            </td>
+                            <td>
+                               <a href="{% url 'core:updateespecialidad' especialidad.id|slugify%}" class="nav-item">
+                              <i class="tim-icons icon-pencil" style= "color:black"></i>                            
+                               </a>                 
+                            </td>
+                            <td>
+                                <a href="{% url 'core:especialidaddelete' especialidad.id|slugify%}" >
+                                  <i class="tim-icons icon-trash-simple" style= "color:black"  ></i>                            
+                              </a>                     
+							
+                            </td> 
+							 </tr>
+						
+                    {% endfor %}
+                    </tbody>
+                  </table>
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>		  
+
+
+    
+
+{% endblock %}
