@@ -16,7 +16,7 @@ class Dentista(models.Model):
     especialidad = models.ForeignKey(Especialidad, on_delete=models.CASCADE)
     telefono = models.IntegerField()
     is_dentist = models.BooleanField(default=True)
-    foto = models.ImageField(upload_to='services/%Y/%m/%D/', null=True, blank=True)
+    foto = models.ImageField(upload_to='dentist/%Y/%m/%D/', null=True, blank=True)
     biografia = models.CharField(max_length=1024)
     
 class Medicamento(models.Model):
@@ -34,7 +34,7 @@ class Tratamiento(models.Model):
     descripcion = models.CharField(max_length=512)
     precio = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(0)])
     precioNeto = models.DecimalField(max_digits=6, decimal_places=2, default=0, validators=[MinValueValidator(0)],)
-    image = models.ImageField(upload_to='dentist/%Y/%m/%D/', null=True, blank=True)
+    image = models.ImageField(upload_to='services/%Y/%m/%D/', null=True, blank=True)
     
     def CalcularPN(self, descuento, precio, id):
         tratamiento = Tratamiento.objects.get(id=id)

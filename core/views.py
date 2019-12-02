@@ -7,7 +7,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
 from .models import Publicacion, Especialidad, Tratamiento, Medicamento, Promocion, Dentista, Paciente
 from .forms import NuevaPublicacionForm, NuevoMedicamentoForm, NuevaEspecialidadForm, NuevoTratamientoForm, NuevaPromocionForm
-from .forms import NuevoUserForm, NuevoDentistaForm
+from .forms import NuevoUserForm, NuevoDentistaForm, NuevoPacienteForm
 from django import forms
 
 def home(request):
@@ -190,38 +190,43 @@ class UpdateDentista(SuperuserRequiredMixin, UpdateView):
     model = Dentista
     form_class = NuevoDentistaForm
     template_name = 'core/dentista_update.html'
-    
     success_url = reverse_lazy('home')
     
-class ModificarPublicacion(LoginRequiredMixin, UpdateView):
+class ModificarPublicacion(SuperuserRequiredMixin, UpdateView):
     model = Publicacion
     form_class = NuevaPublicacionForm
     template_name = 'core/publicacion_update.html'
     success_url = reverse_lazy('core:blog')
 
 
-class EliminarPublicacion(DeleteView):
+class EliminarPublicacion(SuperuserRequiredMixin, DeleteView):
     model = Publicacion
-    form_class = NuevaPublicacionForm
     template_name = 'core/publicacion_delete.html'
     def get_success_url(self):
         return reverse_lazy('core:blog')
 
-class ListaPromocion(LoginRequiredMixin, ListView):
+class ListaPromocion(SuperuserRequiredMixin, ListView):
     model = Promocion
 
-class ModificarPromocion(LoginRequiredMixin, UpdateView):
+class ModificarPromocion(SuperuserRequiredMixin, UpdateView):
     model = Promocion 
     form_class = NuevaPromocionForm
     template_name = 'core/promocion_update.html'
     success_url = reverse_lazy('core:blog')
 
-class EliminarPromocion(DeleteView):
+class EliminarPromocion(SuperuserRequiredMixin, DeleteView):
     model = Promocion
-    form_class = NuevaPromocionForm
     template_name = 'core/promocion_delete.html'
     def get_success_url(self):
         return reverse_lazy('core:blog')
+    
+    
+class NuevoPaciente(SuperuserRequiredMixin, CreateView):
+    model = Paciente
+    form_class = NuevoPacienteForm
+    success_url = reverse_lazy('home')
+    
+    
 
 
 

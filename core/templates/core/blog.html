@@ -47,14 +47,14 @@
 											<p>{{publicacion.created}}</p>
 										</td>
 										<td>
-											<div class="btn-group">												
-												<a href="{% url 'core:modificarpublicacion' publicacion.pk %}" class="btn-info btn">
-													<i class="fas fa-pencil-alt"></i>
+												<a href="{% url 'core:modificarpublicacion' publicacion.pk %}">
+													<font color=blue><i class="fas fa-pencil-alt"></i></font>
 												</a>
-												<a href="{% url 'core:eliminarpublicacion' publicacion.id|slugify %}" class="btn-danger btn">
-													<i class="fas fa-trash-alt"></i>
+										</td>
+										<td>
+												<a href="{% url 'core:eliminarpublicacion' publicacion.id|slugify %}">
+													<font color=red><i class="fas fa-trash-alt"></i></font>
 												</a>
-											</div>
 										</td>
 									</tr>
 								{% endfor %}
@@ -103,15 +103,17 @@
 											<p>{{promocion.created}}</p>
 										</td>
 										<td>
-											<div class="btn-group">
+\
 												
-												<a href="{% url 'core:modificarpromocion' promocion.pk %}" class="btn-info btn">
-													<i class="fas fa-pencil-alt"></i>
+												<a href="{% url 'core:modificarpromocion' promocion.pk %}">
+													<font color=blue><i class="fas fa-pencil-alt"></i></font>
 												</a>
-												<a href="{% url 'core:eliminarpromocion' promocion.id|slugify %}" class="btn-danger btn">
-													<i class="fas fa-trash-alt"></i>
+										</td>
+										<td>
+												<a href="{% url 'core:eliminarpromocion' promocion.id|slugify %}">
+													<font color=red><i class="fas fa-trash-alt"></i></font>
 												</a>
-											</div>
+\
 										</td>
 									</tr>
 									{% endfor %}

@@ -1,0 +1,40 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Nuevo Paciente{% endblock %}
+
+{% block content %}
+<div class="content">
+  <div class="row">
+    <div class="col-md-11">
+			<div class="card white-content">
+      	<div class="card-header">
+          	<h1>Agregar paciente</h1>
+				</div>
+
+				<div class="card-body">
+          <form method="post" enctype="multipart/form-data">{% csrf_token %}
+            {{ form.as_p }}
+            <hr>
+            <div class = "text-center">
+              <input type="submit" class = "btn btn-primary btn-block" value= "Registrar paciente" />
+            </div>
+          </form>
+        </div>
+			</div>
+	  </div>
+	</div>
+</div>		  
+
+<script type="text/javascript">
+  $(function(){
+    $(".datePicker").datepicker({
+      format:'dd/mm/yyyy',
+      uiLibrary: 'bootstrap4',
+      locale: 'es-es',
+      maxDate: new Date('01-01-2018')
+    });
+  });
+</script>
+
+{% endblock %}
