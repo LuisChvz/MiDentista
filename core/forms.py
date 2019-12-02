@@ -116,6 +116,20 @@ class NuevoUserForm(UserCreationForm):
         labels = {
             'username':'','first_name':'','last_name':'','email':'','password1':'','password2':''
         }
+        
+    def clean_first_name(self):
+        first_name=self.cleaned_data.get('first_name')
+        if first_name.replace(" ","").isalpha():
+            return first_name
+        else:
+            raise forms.ValidationError("Por favor ingrese sus nombres correctamente.")
+
+    def clean_last_name(self):
+        last_name=self.cleaned_data.get('last_name')
+        if last_name.replace(" ","").isalpha():
+            return last_name
+        else:
+            raise forms.ValidationError("Por favor ingrese sus apellidos correctamente.")
 
 class EspecialidadModelChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, Especialidad):
@@ -141,6 +155,14 @@ class NuevoDentistaForm(forms.ModelForm):
             'precio':'',
             
         }
+        
+        
+    def clean_telefono(self):
+        telefono = self.cleaned_data.get('telefono')
+        if (telefono.startswith('7') | telefono.startswith('6') | telefono.startswith('2')) and telefono[1:8].isdigit() and len(telefono)==8:
+            return telefono
+        else:
+            raise forms.ValidationError('Por favor ingrese un número de telefono valido en El Salvador.')
 
 class MedicamentoModelChoiceField(forms.ModelMultipleChoiceField):
     def label_from_instance(self, Medicamento):
@@ -167,4 +189,25 @@ class NuevoPacienteForm(forms.ModelForm):
             'apellidos':'',
             'nacimiento':'Fecha de nacimiento'
         }
+        
+    def clean_telefono(self):
+        telefono = self.cleaned_data.get('telefono')
+        if (telefono.startswith('7') | telefono.startswith('6') | telefono.startswith('2')) and telefono[1:8].isdigit() and len(telefono)==8:
+            return telefono
+        else:
+            raise forms.ValidationError('Por favor ingrese un número de telefono valido en El Salvador.')
+        
+    def clean_nombres(self):
+        nombres=self.cleaned_data.get('nombres')
+        if nombres.replace(" ","").isalpha():
+            return nombres
+        else:
+            raise forms.ValidationError("Por favor ingrese sus nombres correctamente.")
+
+    def clean_apellidos(self):
+        apellidos=self.cleaned_data.get('apellidos')
+        if apellidos.replace(" ","").isalpha():
+            return apellidos
+        else:
+            raise forms.ValidationError("Por favor ingrese sus apellidos correctamente.")
         
