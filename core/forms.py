@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Publicacion, Especialidad, Tratamiento, Medicamento, Promocion, Categoria, Dentista, Paciente
+from .models import Publicacion, Especialidad, Tratamiento, Medicamento, Promocion, Categoria, Dentista, Paciente, Cita, Receta
 
 class NuevaPublicacionForm(forms.ModelForm):
     
@@ -141,13 +141,19 @@ class NuevoDentistaForm(forms.ModelForm):
             'precio':'',
             
         }
+
+class MedicamentoModelChoiceField(forms.ModelMultipleChoiceField):
+    def label_from_instance(self, Medicamento):
+        return Medicamento.nombre
         
 class NuevoPacienteForm(forms.ModelForm):
     
+    alergias =  MedicamentoModelChoiceField(queryset = Medicamento.objects.filter().order_by('id'), required = True, widget = forms.SelectMultiple(attrs={'class':'form-control'}))
+
     foto = forms.ImageField(required=True, label="Foto de perfil")
     class Meta: 
         model = Paciente
-        fields = ['nombres','apellidos', 'nacimiento', 'telefono', 'foto']
+        fields = ['nombres','apellidos', 'nacimiento', 'telefono', 'alergias', 'foto']
         widgets = {
             'nombres': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Nombres:'}),
             'apellidos': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Apellidos:'}),
@@ -161,3 +167,4 @@ class NuevoPacienteForm(forms.ModelForm):
             'apellidos':'',
             'nacimiento':'Fecha de nacimiento'
         }
+        

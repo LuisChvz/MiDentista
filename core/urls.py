@@ -2,7 +2,7 @@ from django.urls import path
 from .views import home, NuevaPublicacion, NuevoMedicamento, NuevoTratamiento, NuevaEspecialidad, NuevaPromocion, Blog
 from .views import TratamientoList, MedicamentoList, TratamientoUpdate, MedicamentoUpdate,EspecialidadUpdate, EspecialidadList, TratamientoDelete, MedicamentoDelete,EspecialidadDelete
 from .views import NuevoUsuario, NuevoDentista, UpdateUsuario, UpdateDentista, ModificarPublicacion , EliminarPublicacion,  ModificarPromocion, EliminarPromocion
-from .views import NuevoPaciente
+from .views import NuevoPaciente, PacienteDelete, PacienteList, DentistaDelete, DentistaList
 
 urlpatterns = [
     path('', home, name="home"),
@@ -32,7 +32,11 @@ core_patterns = ([
     path('modificarpublicacion/<int:pk>', ModificarPublicacion.as_view(), name = 'modificarpublicacion'),
     path('eliminarpromocion/<int:pk>', EliminarPromocion.as_view(), name = 'eliminarpromocion'),
     path('eliminarpublicacion/<int:pk>', EliminarPublicacion.as_view(), name = 'eliminarpublicacion'),
-    path('nuevopaciente/', NuevoPaciente.as_view(), name='nuevopaciente'),
+    path('nuevopaciente/', NuevoPaciente, name='nuevopaciente'),
+    path('dentistas', DentistaList.as_view(), name = 'dentistas'),
+    path('pacientes', PacienteList.as_view(), name = 'pacientes'),
+    path('eliminardentista/<int:pk>', DentistaDelete.as_view(), name = 'dentistadelete'),
+    path('eliminarpaciente/<int:pk>', PacienteDelete.as_view(), name = 'pacientedelete'),
     
     
 ], 'core')

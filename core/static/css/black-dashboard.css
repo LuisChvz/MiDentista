@@ -347,7 +347,6 @@ Copyright (c) 2015 Daniel Eden
   border: none;
   position: relative;
   overflow: hidden;
-  margin: 4px 1px;
   border-radius: 2rem;
   padding: 11px 40px;
   cursor: pointer;
@@ -2039,8 +2038,8 @@ fieldset[disabled] .btn-link.active {
 .form-control[disabled],
 .form-control[readonly],
 fieldset[disabled] .form-control {
-  background-color: #1d253b;
-  color: #344675;
+  background-color: #cacaca;
+  color: #3f3f3f;
   cursor: not-allowed;
 }
 
@@ -5847,6 +5846,7 @@ table.tablesorter thead tr .headerSortDown {
 .white-content .main-panel fieldset[disabled] .form-control {
   background: #E3E3E3;
   border-color: rgba(29, 37, 59, 0.3);
+  width: 5px;
 }
 
 .white-content .main-panel .input-group-focus .input-group-prepend .input-group-text,

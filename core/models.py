@@ -4,7 +4,8 @@ from django.core.validators import MinValueValidator
 from django.db import models
 import decimal
 from django.contrib.auth.models import User
-
+from datetime import date
+from multiselectfield import MultiSelectField
 
 class Especialidad(models.Model):
     id = models.AutoField(primary_key=True)
@@ -50,7 +51,6 @@ class Promocion(models.Model):
     image = models.ImageField(upload_to='promo/%Y/%m/%D/', null=True, blank=True)
     created = models.DateField(auto_now=True)
 
-    
 class Paciente(models.Model):
     id = models.AutoField(primary_key=True)
     nombres = models.CharField(max_length=64)
@@ -58,16 +58,21 @@ class Paciente(models.Model):
     nacimiento = models.DateField()
     telefono = models.IntegerField()
     foto = models.ImageField(upload_to='patient/%Y/%m/%D/', null=True, blank=True)
+    edad = models.IntegerField(default=0)
+    alergias = models.ManyToManyField(Medicamento,  blank=True)
     
-class Alergia(models.Model):
-    id = models.AutoField(primary_key=True)
-    alergia = models.ForeignKey(Medicamento, on_delete=models.CASCADE)
-    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
+    def calcularEdad(self, id):
+        paciente = Paciente.objects.get(id=id)
+        today = date.today()
+        
+        paciente.edad = today.year - paciente.nacimiento.year - ((today.month, today.day) < (paciente.nacimiento.month, paciente.nacimiento.day))
+        paciente.save()
+
     
 class Receta(models.Model):
     id = models.AutoField(primary_key=True)
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
-    medicamento = models.ForeignKey(Medicamento, on_delete=models.CASCADE)
+    medicamento = models.ManyToManyField(Medicamento)
     indicaciones = models.CharField(max_length=128)
     
 class Cita(models.Model):
@@ -97,6 +102,5 @@ admin.site.register(Tratamiento)
 admin.site.register(Categoria)
 admin.site.register(Promocion)
 admin.site.register(Paciente)
-admin.site.register(Alergia)
 admin.site.register(Receta)
 admin.site.register(Cita)

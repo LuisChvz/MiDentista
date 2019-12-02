@@ -9,6 +9,7 @@ from .models import Publicacion, Especialidad, Tratamiento, Medicamento, Promoci
 from .forms import NuevaPublicacionForm, NuevoMedicamentoForm, NuevaEspecialidadForm, NuevoTratamientoForm, NuevaPromocionForm
 from .forms import NuevoUserForm, NuevoDentistaForm, NuevoPacienteForm
 from django import forms
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     promociones = Promocion.objects.filter().order_by('-id')[:5]
@@ -50,6 +51,7 @@ class NuevaPublicacion(SuperuserRequiredMixin, CreateView):
     form_class = NuevaPublicacionForm
     success_url = reverse_lazy('home')
     
+@login_required
 def Blog(request):
     promociones = Promocion.objects.all()
     publicaciones = Publicacion.objects.all()
@@ -67,6 +69,7 @@ class NuevoMedicamento(SuperuserRequiredMixin, CreateView):
     form_class = NuevoMedicamentoForm
     success_url = reverse_lazy('home')    
     
+@login_required
 def NuevoTratamiento(request):
     if request.method == 'POST':
         form = NuevoTratamientoForm(request.POST, request.FILES)
@@ -85,6 +88,7 @@ def NuevoTratamiento(request):
     
     return render(request, 'core/tratamiento_form.html', {'form':form})
 
+@login_required
 def NuevaPromocion(request):
     if request.method == 'POST':
         form = NuevaPromocionForm(request.POST, request.FILES)
@@ -163,7 +167,8 @@ class NuevoUsuario(SuperuserRequiredMixin, CreateView):
         form.fields['password1'].widget = forms.PasswordInput(attrs={'class':'form-control mb-2', 'placeholder':'Contraseña: '})
         form.fields['password2'].widget = forms.PasswordInput(attrs={'class':'form-control mb-2', 'placeholder':'Confirmar contraseña: '})
         return form
-    
+
+@login_required 
 def NuevoDentista(request, usuario):
     if request.method == 'POST':
         form = NuevoDentistaForm(request.POST, request.FILES)
@@ -220,11 +225,45 @@ class EliminarPromocion(SuperuserRequiredMixin, DeleteView):
     def get_success_url(self):
         return reverse_lazy('core:blog')
     
-    
-class NuevoPaciente(SuperuserRequiredMixin, CreateView):
+
+@login_required   
+def NuevoPaciente(request):
+    if request.method == 'POST':
+        form = NuevoPacienteForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            
+            ultimo = Paciente.objects.latest('id').id
+            instancia = Paciente()
+            
+            instancia.calcularEdad(ultimo)
+
+            return redirect('home')
+            
+    else:
+        form = NuevoPacienteForm()
+        
+    return render(request, 'core/paciente_form.html', {'form':form})
+            
+
+class DentistaList(ListView):
+    model = Dentista
+    template_name = 'core/dentista_list.html'
+       
+            
+class DentistaDelete(LoginRequiredMixin, DeleteView):
+    model = Dentista
+    template_name= "core/dentista_delete.html"
+    success_url = reverse_lazy('core:dentistas')
+
+class PacienteList(ListView):
     model = Paciente
-    form_class = NuevoPacienteForm
-    success_url = reverse_lazy('home')
+    template_name = 'core/paciente_list.html'
+
+class PacienteDelete(LoginRequiredMixin, DeleteView):
+    model = Paciente
+    template_name= "core/paciente_delete.html"
+    success_url = reverse_lazy('core:pacientes')
     
     
 

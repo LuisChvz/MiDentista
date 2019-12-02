@@ -1,0 +1,87 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %} Pacientes {% endblock %}
+
+{% block content %}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-11">
+			    <div class="card white-content">
+            <div class="card-header">
+                <h1>Pacientes</h1>
+            </div>
+				    <div class="card-body">
+					    <div class="table-responsive">
+                <table class="table tablesorter " id="">
+                  <thead class=" text-primary">
+                      <th>
+                        
+                      </th>
+                      <th>
+                        <h4>Id</h4>
+                      </th>
+                      <th>
+                        <h4>Nombres</h4>
+                      </th>
+                       <th>
+                        <h4>Apellidos</h4>
+                      </th>
+                       <th>
+                        <h4>F.Nacimiento</h4>
+                      </th>
+                       <th>
+                        <h4>Teléfono</h4>
+                      </th>
+                      <th>
+                        
+                      </th>
+                  </thead>
+				   
+                  <tbody>
+                    {% for paciente in paciente_list|dictsort:'id' %}
+                      <tr>
+                            <td>
+                        
+                            </td>
+                            <td >
+                              <p><b><font size="4">{{paciente.id}}</font></b></p>
+                            </td>
+                            <td >
+                              <p><b><font size="4">{{paciente.nombres}}</font></b></p>
+                            </td>
+                            <td >
+                              <p><b><font size="4">{{paciente.apellidos}}</font></b></p>
+                            </td>
+                            <td >
+                              <p><b><font size="4">{{paciente.nacimiento}}</font></b></p>
+                            </td>
+                            <td >
+                              <p><b><font size="4">{{paciente.telefono}}</font></b></p>
+                            </td>
+                            <td>
+                               <a href="#" class="nav-item">
+                              <i class="tim-icons icon-pencil" style= "color:black"></i>                            
+                               </a>                 
+                            </td>
+                            <td>
+                                <a href="{% url 'core:pacientedelete' paciente.id|slugify%}" >
+                                  <i class="tim-icons icon-trash-simple" style= "color:black"  ></i>                            
+                              </a>                     
+							
+                            </td> 
+							        </tr>
+						
+                    {% endfor %}
+                  </tbody>
+                </table>
+				      </div>
+			      </div>
+	        </div>
+	      </div>
+      </div>
+    </div>	  
+
+{% endblock %}
