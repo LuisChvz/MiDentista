@@ -152,7 +152,7 @@ class NuevoPacienteForm(forms.ModelForm):
             'nombres': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Nombres:'}),
             'apellidos': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Apellidos:'}),
             'telefono': forms.NumberInput(attrs={'class':'form-control', 'placeholder':'Telefono: '}),
-            'nacimiento': forms.DateInput(attrs={'class':'form-control datePicker','data-provide':'datepicker','data-date-end-date':'0d',"data-date-format":"dd/mm/yyyy" }),
+            'nacimiento': forms.DateInput(attrs={'readonly':'true','class':'form-control datePicker','data-provide':'datepicker','data-date-end-date':'0d',"data-date-format":"dd/mm/yyyy" }),
             'foto': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'})
         }
         labels = {
