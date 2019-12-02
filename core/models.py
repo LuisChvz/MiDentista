@@ -13,10 +13,11 @@ class Especialidad(models.Model):
 class Dentista(models.Model):
     id = models.AutoField(primary_key=True)
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
-    especializacion = models.ForeignKey(Especialidad, on_delete=models.CASCADE)
+    especialidad = models.ForeignKey(Especialidad, on_delete=models.CASCADE)
     telefono = models.IntegerField()
-    correo = models.EmailField(unique=True)
     is_dentist = models.BooleanField(default=True)
+    foto = models.ImageField(upload_to='services/%Y/%m/%D/', null=True, blank=True)
+    biografia = models.CharField(max_length=1024)
     
 class Medicamento(models.Model):
     id = models.AutoField(primary_key=True)
@@ -33,6 +34,7 @@ class Tratamiento(models.Model):
     descripcion = models.CharField(max_length=512)
     precio = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(0)])
     precioNeto = models.DecimalField(max_digits=6, decimal_places=2, default=0, validators=[MinValueValidator(0)],)
+    image = models.ImageField(upload_to='dentist/%Y/%m/%D/', null=True, blank=True)
     
     def CalcularPN(self, descuento, precio, id):
         tratamiento = Tratamiento.objects.get(id=id)
@@ -55,7 +57,7 @@ class Paciente(models.Model):
     apellidos = models.CharField(max_length=64)
     nacimiento = models.DateField()
     telefono = models.IntegerField()
-    correo = models.EmailField(unique=True)
+    foto = models.ImageField(upload_to='patient/%Y/%m/%D/', null=True, blank=True)
     
 class Alergia(models.Model):
     id = models.AutoField(primary_key=True)
@@ -83,6 +85,7 @@ class Publicacion(models.Model):
     descripcion = models.CharField(max_length=1024)
     created = models.DateField(auto_now=True)
     image = models.ImageField(upload_to='post/%Y/%m/%D/', null=True, blank=True)
+    
     
     
 

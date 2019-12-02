@@ -9,18 +9,24 @@
 <div class="content">
     <div class="row">
         <div class="col-md-11">
-			<div class="card white-content">
-              	<div class="card-header">
-              		<h1>Especialidades</h1>
-                  <a href="{% url 'core:nuevaespecialidad' %}" class="nav-item">
-										<i class="tim-icons icon-simple-add"></i>
-										Agregar Especialidad
-									</a>
-				</div>
+			    <div class="card white-content">
+            <div class="card-header row">
+              <div class="col-md-8">
+                <h1>Especialidades</h1>
+              </div>
+              <div class="col-md-4" align=right>
+                <a href="{% url 'core:nuevaespecialidad' %}">
+                  <font size=4>
+                    <i class="tim-icons icon-simple-add"></i>
+                    Agregar especialidad
+                  </font>
+                </a>
+              </div>
+		        </div>
 
-				<div class="card-body">
-					 <div class="table-responsive">
-                  <table class="table tablesorter " id="">
+				    <div class="card-body">
+					    <div class="table-responsive">
+                <table class="table tablesorter " id="">
                   <thead class=" text-primary">
                       <th>
                         
@@ -34,12 +40,11 @@
                       <th>
                         
                       </th>
-                    </thead>
+                  </thead>
 				   
-                    
-                    <tbody>
+                  <tbody>
                     {% for especialidad in especialidad_list|dictsort:'id' %}
-                       
+                      <tr>
                             <td>
                         
                             </td>
@@ -60,18 +65,16 @@
                               </a>                     
 							
                             </td> 
-							 </tr>
+							        </tr>
 						
                     {% endfor %}
-                    </tbody>
-                  </table>
-				</div>
-			</div>
-	    </div>
-	</div>
-</div>		  
-
-
-    
+                  </tbody>
+                </table>
+				      </div>
+			      </div>
+	        </div>
+	      </div>
+      </div>
+    </div>	  
 
 {% endblock %}

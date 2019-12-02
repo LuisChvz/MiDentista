@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import home, NuevaPublicacion, NuevoMedicamento, NuevoTratamiento, NuevaEspecialidad, NuevaPromocion, Blog
 from .views import TratamientoList, MedicamentoList, TratamientoUpdate, MedicamentoUpdate,EspecialidadUpdate, EspecialidadList, TratamientoDelete, MedicamentoDelete,EspecialidadDelete
+from .views import NuevoUsuario, NuevoDentista, UpdateUsuario, UpdateDentista, ModificarPublicacion , EliminarPublicacion,  ModificarPromocion, EliminarPromocion
 
 urlpatterns = [
     path('', home, name="home"),
@@ -22,5 +23,14 @@ core_patterns = ([
     path('eliminartratamientos/<int:pk>', TratamientoDelete.as_view(), name = 'tratamientodelete'),
     path('eliminarmedicamentos/<int:pk>', MedicamentoDelete.as_view(), name = 'medicamentodelete'),
     path('eliminarespecialidad/<int:pk>', EspecialidadDelete.as_view(), name = 'especialidaddelete'),
+    path('nuevousuario/', NuevoUsuario.as_view(), name='nuevousuariod'),
+    path('nuevodentista/<int:usuario>', NuevoDentista, name='nuevodentista'),
+    path('updateusuario/<int:pk>', UpdateUsuario.as_view(), name='updateusuariod'),
+    path('updatedentista/<int:pk>', UpdateDentista.as_view(), name='updatedentista'),
+    path('modificarpromocion/<int:pk>', ModificarPromocion.as_view(), name = 'modificarpromocion'),
+    path('modificarpublicacion/<int:pk>', ModificarPublicacion.as_view(), name = 'modificarpublicacion'),
+    path('eliminarpromocion/<int:pk>', EliminarPromocion.as_view(), name = 'eliminarpromocion'),
+    path('eliminarpublicacion/<int:pk>', EliminarPublicacion.as_view(), name = 'eliminarpublicacion'),
+    
     
 ], 'core')

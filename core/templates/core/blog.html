@@ -16,7 +16,7 @@
 
 				<div class="card-body">
 					<div class="table-responsive">
-						<table class="table tablesorter " id="">
+						<table class="table " id="">
 							<thead class=" text-primary">
 
 								<th>
@@ -47,12 +47,17 @@
 											<p>{{publicacion.created}}</p>
 										</td>
 										<td>
-
+											<div class="btn-group">												
+												<a href="{% url 'core:modificarpublicacion' publicacion.pk %}" class="btn-info btn">
+													<i class="fas fa-pencil-alt"></i>
+												</a>
+												<a href="{% url 'core:eliminarpublicacion' publicacion.id|slugify %}" class="btn-danger btn">
+													<i class="fas fa-trash-alt"></i>
+												</a>
+											</div>
 										</td>
 									</tr>
-
 								{% endfor %}
-
 							</tbody>
 						</table>
 					</div>
@@ -98,21 +103,64 @@
 											<p>{{promocion.created}}</p>
 										</td>
 										<td>
-
+											<div class="btn-group">
+												
+												<a href="{% url 'core:modificarpromocion' promocion.pk %}" class="btn-info btn">
+													<i class="fas fa-pencil-alt"></i>
+												</a>
+												<a href="{% url 'core:eliminarpromocion' promocion.id|slugify %}" class="btn-danger btn">
+													<i class="fas fa-trash-alt"></i>
+												</a>
+											</div>
 										</td>
 									</tr>
-								{% endfor %}
+									{% endfor %}
 
-							</tbody>
-						</table>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>		  
+	<!--div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+				</div>
+				<div class="modal-footer">
+					<br><br><br>
+					<a>
+						¿Desea borrar el elemento seleccionado? Esta acción no se podrá deshacer?
+					</a>
+					<form id='deleteForm' action="" method="post">
+						{% csrf_token %}
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+						<input type="submit" class = "btn btn-danger" value="Aceptar"/>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
-</div>		  
-
-
-    
+		<div class="modal fade" id="deleteModal2" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+				</div>
+				<div class="modal-footer">
+					<br><br><br>
+					<a>
+						¿Desea borrar el elemento ? 
+					</a>
+					<form id='deleteForm' action="" method="post">
+						{% csrf_token %}
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+						<button type="submit" class = "btn btn-danger" value="Aceptar"></button> 
+					</form>
+				</div>
+			</div>
+		</div>
+	</div-->
 
 {% endblock %}
