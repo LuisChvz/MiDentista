@@ -2,7 +2,8 @@ from django.urls import path
 from .views import home, NuevaPublicacion, NuevoMedicamento, NuevoTratamiento, NuevaEspecialidad, NuevaPromocion, Blog
 from .views import TratamientoList, MedicamentoList, TratamientoUpdate, MedicamentoUpdate,EspecialidadUpdate, EspecialidadList, TratamientoDelete, MedicamentoDelete,EspecialidadDelete
 from .views import NuevoUsuario, NuevoDentista, UpdateUsuario, UpdateDentista, ModificarPublicacion , EliminarPublicacion,  ModificarPromocion, EliminarPromocion
-from .views import NuevoPaciente, PacienteDelete, PacienteList, DentistaDelete, DentistaList
+from .views import NuevoPaciente, PacienteDelete, PacienteList, DentistaDelete, DentistaList, NuevaCategoria, CategoriaDelete, CategoriaList, CategoriaUpdate
+from .views import ReestablecerPrecio
 
 urlpatterns = [
     path('', home, name="home"),
@@ -37,6 +38,11 @@ core_patterns = ([
     path('pacientes', PacienteList.as_view(), name = 'pacientes'),
     path('eliminardentista/<int:pk>', DentistaDelete.as_view(), name = 'dentistadelete'),
     path('eliminarpaciente/<int:pk>', PacienteDelete.as_view(), name = 'pacientedelete'),
+    path('nuevacategoria', NuevaCategoria.as_view(), name = 'nuevacategoria'),
+    path('categorias', CategoriaList.as_view(), name = 'categorias'),
+    path('actualizarcategoria/<int:pk>', CategoriaUpdate.as_view(), name = 'updatecategoria'),
+    path('eliminarcateogira/<int:pk>', CategoriaDelete.as_view(), name = 'categoriadelete'),
+    path('reestablecerprecio/<int:pk>', ReestablecerPrecio, name = 'reestablecerprecio'),
     
     
 ], 'core')

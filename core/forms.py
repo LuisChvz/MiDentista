@@ -211,3 +211,15 @@ class NuevoPacienteForm(forms.ModelForm):
         else:
             raise forms.ValidationError("Por favor ingrese sus apellidos correctamente.")
         
+class NuevaCategoriaForm(forms.ModelForm):
+    
+    class Meta: 
+        model = Categoria
+        fields = ['nombre']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Nombre: '}),
+        }
+        labels = {
+            'nombre':''
+        }
+        

@@ -17,25 +17,29 @@
 								
 								<table class="table table-sm" id="" width=100%>
 									<tr>
-										<td>
-											<a href="{% url 'core:tratamientoupdate' tratamiento.id|slugify%}">
-												<i class="tim-icons icon-pencil" style= "color:black"></i>                            
-											</a> 
-										</td>
+										{% if request.user.is_superuser %}
+											<td>
+												<a href="{% url 'core:tratamientoupdate' tratamiento.id|slugify%}">
+													<i class="tim-icons icon-pencil" style= "color:black"></i>                            
+												</a> 
+											</td>
+										{% endif %}
 										<td align = center>
 											<h1 align=center>{{tratamiento.nombre}}</h1>
 										</td>
-										<td align = right>
-											<a href= "{% url 'core:tratamientodelete' tratamiento.id|slugify%}">
-												<i class="tim-icons icon-trash-simple" style= "color:black"></i>                            
-											</a>
-										</td>
+										{% if request.user.is_superuser %}
+											<td align = right>
+												<a href= "{% url 'core:tratamientodelete' tratamiento.id|slugify%}">
+													<i class="tim-icons icon-trash-simple" style= "color:black"></i>                            
+												</a>
+											</td>
+										{% endif %}
 									</tr>						
 								</table>
 								<img src = {{tratamiento.image.url}}>
 								<hr>
 								<p align=justify><font size=3>{{tratamiento.descripcion}}</font></p>
-								<h1 align = right>$ {{tratamiento.precio}}</h1>
+								<h1 align = right>$ {{tratamiento.precioNeto}}</h1>
 							</div>
 
 						</div>

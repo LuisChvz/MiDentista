@@ -17,29 +17,43 @@
 								
 								<table class="table table-sm" id="" width=100%>
 									<tr>
-										<td>
-											<a href="{% url 'core:updatedentista' dentista.id|slugify%}">
-												<i class="tim-icons icon-pencil" style= "color:black"></i>                            
-											</a> 
-										</td>
+										{% if request.user.is_superuser %}
+											<td>
+												<a href="{% url 'core:updatedentista' dentista.id|slugify%}">
+													<i class="tim-icons icon-pencil" style= "color:black"></i>                            
+												</a>
+											</td>
+										{% endif %}
 										<td align = center>
 											<h1 align=center>{{dentista.usuario.first_name}} {{dentista.usuario.last_name}}</h1>
 										</td>
-										<td align = right>
-											<a href="{% url 'core:dentistadelete' dentista.id|slugify%}" >
-												<i class="tim-icons icon-trash-simple" style= "color:black"></i>                            
-											</a>
-										</td>
+										{% if request.user.is_superuser %}
+											<td align = right>
+												<a href="{% url 'core:dentistadelete' dentista.id|slugify%}" >
+													<i class="tim-icons icon-trash-simple" style= "color:black"></i>                            
+												</a>
+											</td>
+										{% endif %}
 									</tr>						
 								</table>
 								<img src = {{dentista.foto.url}}>
 								<hr>
-								<p align=justify><font size=3 color=black>Especialidad: {{dentista.especialidad.nombre}}</font></p>
+								<p align=justify><font size=3 color=black><b>Especialidad:</b> {{dentista.especialidad.nombre}}</font></p>
 								<hr>
 								<p align=justify><font size=3>{{dentista.biografia}}</font></p>
 								<hr>
-								<p align=left><font size=3> Tel: {{dentista.telefono}}</font><p>
-								<p align=left><font size=3> Email: {{dentista.usuario.email}}</font><p>
+								{% if request.user.is_superuser %}
+									<table class="table table-sm" id="" width=100%>
+										<tr>
+											<td width=30%>
+												<p align=left><font size=3> <b>Tel:</b> {{dentista.telefono}}</font><p>
+											</td>
+											<td width=70%>
+												<p align=right><font size=3><b> Email: </b> {{dentista.usuario.email}}</font><p>
+											</td>										
+										</tr>
+									</table>
+								{% endif %}
 							</div>
 
 						</div>

@@ -66,6 +66,13 @@
 						</div>
 					</div>
 				</li>
+			{% else %}
+				<li>
+					<a href="{% url 'core:dentistas' %}">
+						<i class="tim-icons icon-notes"></i>
+						<p><font size=2>Dentistas</font></p>
+					</a>
+				</li>
 			{% endif %}
 			{% if request.user.is_superuser %}
 				<li class="nav-item">
@@ -119,6 +126,10 @@
 										<i class="tim-icons icon-pencil"></i>
 										<p>Administrar</p>
 									</a>
+									<a href="{% url 'core:categorias' %}" class="nav-item">
+										<i class="tim-icons icon-molecule-40"></i>
+										<p>Categorías</p>
+									</a>
 									<a href="{% url 'core:medicamentos' %}" class="nav-item">
 										<i class="tim-icons icon-atom"></i>
 										<p>Medicamentos</p>
@@ -130,7 +141,7 @@
 					</li>
 				{% else %}
 					<li>
-						<a href="#">
+						<a href="{% url 'core:tratamientos' %}">
 							<i class="tim-icons icon-notes"></i>
 							<p><font size=2>Servicios</font></p>
 						</a>

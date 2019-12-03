@@ -5,11 +5,12 @@ from django.views.generic.list import ListView
 from braces.views import SuperuserRequiredMixin, LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
-from .models import Publicacion, Especialidad, Tratamiento, Medicamento, Promocion, Dentista, Paciente
+from .models import Publicacion, Especialidad, Tratamiento, Medicamento, Promocion, Dentista, Paciente, Categoria
 from .forms import NuevaPublicacionForm, NuevoMedicamentoForm, NuevaEspecialidadForm, NuevoTratamientoForm, NuevaPromocionForm
-from .forms import NuevoUserForm, NuevoDentistaForm, NuevoPacienteForm
+from .forms import NuevoUserForm, NuevoDentistaForm, NuevoPacienteForm, NuevaCategoriaForm
 from django import forms
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+
 
 def home(request):
     promociones = Promocion.objects.filter().order_by('-id')[:5]
@@ -51,7 +52,7 @@ class NuevaPublicacion(SuperuserRequiredMixin, CreateView):
     form_class = NuevaPublicacionForm
     success_url = reverse_lazy('home')
     
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def Blog(request):
     promociones = Promocion.objects.all()
     publicaciones = Publicacion.objects.all()
@@ -69,7 +70,7 @@ class NuevoMedicamento(SuperuserRequiredMixin, CreateView):
     form_class = NuevoMedicamentoForm
     success_url = reverse_lazy('home')    
     
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def NuevoTratamiento(request):
     if request.method == 'POST':
         form = NuevoTratamientoForm(request.POST, request.FILES)
@@ -88,7 +89,7 @@ def NuevoTratamiento(request):
     
     return render(request, 'core/tratamiento_form.html', {'form':form})
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def NuevaPromocion(request):
     if request.method == 'POST':
         form = NuevaPromocionForm(request.POST, request.FILES)
@@ -111,44 +112,44 @@ class TratamientoList(ListView):
     model = Tratamiento
     template_name = 'core/tratamiento_list.html'
 
-class MedicamentoList(ListView):
+class MedicamentoList(LoginRequiredMixin, ListView):
     model = Medicamento
     template_name = 'core/medicamento_list.html'
 
-class EspecialidadList(ListView):
+class EspecialidadList(LoginRequiredMixin, ListView):
     model = Especialidad
     template_name = 'core/especialidad_list.html'
 
-class TratamientoUpdate(LoginRequiredMixin, UpdateView):
+class TratamientoUpdate(SuperuserRequiredMixin, UpdateView):
     model = Tratamiento
     template_name = 'core/tratamiento_update.html'
     form_class = NuevoTratamientoForm
     success_url = reverse_lazy('core:tratamientos')
 
-class MedicamentoUpdate(LoginRequiredMixin, UpdateView):
+class MedicamentoUpdate(SuperuserRequiredMixin, UpdateView):
     model = Medicamento
     template_name = 'core/medicamento_update.html'
     form_class = NuevoMedicamentoForm
     success_url = reverse_lazy('core:medicamentos')
 
-class EspecialidadUpdate(LoginRequiredMixin, UpdateView):
+class EspecialidadUpdate(SuperuserRequiredMixin, UpdateView):
     model = Especialidad
     template_name = 'core/especialidad_update.html'
     form_class = NuevaEspecialidadForm
     success_url = reverse_lazy('core:especialidades')
 
-class TratamientoDelete(LoginRequiredMixin, DeleteView):
+class TratamientoDelete(SuperuserRequiredMixin, DeleteView):
     model = Tratamiento
     template_name= "core/tratamiento_delete.html"
     success_url = reverse_lazy('core:tratamientos')
 
 
-class MedicamentoDelete(LoginRequiredMixin, DeleteView):
+class MedicamentoDelete(SuperuserRequiredMixin, DeleteView):
     model = Medicamento
     template_name= "core/medicamento_delete.html"
     success_url = reverse_lazy('core:medicamentos')
 
-class EspecialidadDelete(LoginRequiredMixin, DeleteView):
+class EspecialidadDelete(SuperuserRequiredMixin, DeleteView):
     model = Especialidad
     template_name= "core/especualidad_delete.html"
     success_url = reverse_lazy('core:especialidades')
@@ -168,7 +169,7 @@ class NuevoUsuario(SuperuserRequiredMixin, CreateView):
         form.fields['password2'].widget = forms.PasswordInput(attrs={'class':'form-control mb-2', 'placeholder':'Confirmar contraseña: '})
         return form
 
-@login_required 
+@user_passes_test(lambda u: u.is_superuser)
 def NuevoDentista(request, usuario):
     if request.method == 'POST':
         form = NuevoDentistaForm(request.POST, request.FILES)
@@ -226,7 +227,7 @@ class EliminarPromocion(SuperuserRequiredMixin, DeleteView):
         return reverse_lazy('core:blog')
     
 
-@login_required   
+@user_passes_test(lambda u: u.is_superuser)
 def NuevoPaciente(request):
     if request.method == 'POST':
         form = NuevoPacienteForm(request.POST, request.FILES)
@@ -251,22 +252,45 @@ class DentistaList(ListView):
     template_name = 'core/dentista_list.html'
        
             
-class DentistaDelete(LoginRequiredMixin, DeleteView):
+class DentistaDelete(SuperuserRequiredMixin, DeleteView):
     model = Dentista
     template_name= "core/dentista_delete.html"
     success_url = reverse_lazy('core:dentistas')
 
-class PacienteList(ListView):
+class PacienteList(LoginRequiredMixin, ListView):
     model = Paciente
     template_name = 'core/paciente_list.html'
 
-class PacienteDelete(LoginRequiredMixin, DeleteView):
+class PacienteDelete(SuperuserRequiredMixin, DeleteView):
     model = Paciente
     template_name= "core/paciente_delete.html"
     success_url = reverse_lazy('core:pacientes')
     
     
+class NuevaCategoria(SuperuserRequiredMixin, CreateView):
+    model = Categoria
+    form_class = NuevaCategoriaForm
+    success_url = reverse_lazy('core:categorias')  
 
+class CategoriaList(ListView):
+    model = Categoria
+    template_name = 'core/categoria_list.html'   
 
+class CategoriaUpdate(LoginRequiredMixin, UpdateView):
+    model = Categoria
+    template_name = 'core/categoria_update.html'
+    form_class = NuevaCategoriaForm
+    success_url = reverse_lazy('core:categorias') 
+
+class CategoriaDelete(LoginRequiredMixin, DeleteView):
+    model = Categoria
+    template_name= "core/categoria_delete.html"
+    success_url = reverse_lazy('core:categorias')
+    
+def ReestablecerPrecio(request, pk):
+    tratamiento = Tratamiento.objects.get(id=pk)
+    tratamiento.precioNeto = tratamiento.precio
+    tratamiento.save()
+    return redirect('core:tratamientos')
 
     
