@@ -2,18 +2,20 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from braces.views import SuperuserRequiredMixin, LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
 from .models import Publicacion, Especialidad, Tratamiento, Medicamento, Promocion, Dentista, Paciente, Categoria, Cita, Receta
 from .forms import NuevaPublicacionForm, NuevoMedicamentoForm, NuevaEspecialidadForm, NuevoTratamientoForm, NuevaPromocionForm
-from .forms import NuevoUserForm, NuevoDentistaForm, NuevoPacienteForm, NuevaCategoriaForm, CitaForm
+from .forms import NuevoUserForm, NuevoDentistaForm, NuevoPacienteForm, NuevaCategoriaForm, CitaForm, NuevaRecetaForm, UpdateCitaForm
 from django import forms
 from django.contrib.auth.decorators import login_required, user_passes_test
 import datetime
 
 
 def home(request):
+    dentistas = Dentista.objects.all()
     promociones = Promocion.objects.filter().order_by('-id')[:5]
     cantidad = Promocion.objects.filter().count()
     post = Publicacion.objects.all().order_by('-id')
@@ -35,17 +37,17 @@ def home(request):
                         p4 = ps[4]
                         
     if cantidad == 1:
-        return render(request, "core/home.html", {'p0':p0, 'cantidad':cantidad, 'post':post})
+        return render(request, "core/home.html", {'p0':p0, 'cantidad':cantidad, 'post':post, 'dentista_list':dentistas})
     elif cantidad == 2:
-        return render(request, "core/home.html", {'p0':p0, 'p1':p1, 'cantidad':cantidad, 'post':post})
+        return render(request, "core/home.html", {'p0':p0, 'p1':p1, 'cantidad':cantidad, 'post':post, 'dentista_list':dentistas})
     elif cantidad == 3:
-        return render(request, "core/home.html", {'p0':p0, 'p1':p1, 'p2':p2, 'cantidad':cantidad, 'post':post})
+        return render(request, "core/home.html", {'p0':p0, 'p1':p1, 'p2':p2, 'cantidad':cantidad, 'post':post, 'dentista_list':dentistas})
     elif cantidad == 4:
-        return render(request, "core/home.html", {'p0':p0, 'p1':p1, 'p2':p2, 'p3':p3, 'cantidad':cantidad, 'post':post})
+        return render(request, "core/home.html", {'p0':p0, 'p1':p1, 'p2':p2, 'p3':p3, 'cantidad':cantidad, 'post':post, 'dentista_list':dentistas})
     elif cantidad == 5:
-        return render(request, "core/home.html", {'p0':p0, 'p1':p1, 'p2':p2, 'p3':p3, 'p4':p4, 'cantidad':cantidad, 'post':post})
+        return render(request, "core/home.html", {'p0':p0, 'p1':p1, 'p2':p2, 'p3':p3, 'p4':p4, 'cantidad':cantidad, 'post':post, 'dentista_list':dentistas})
     else:
-        return render(request, "core/home.html", {'post':post})
+        return render(request, "core/home.html", {'post':post, 'dentista_list':dentistas})
     
 
 class NuevaPublicacion(SuperuserRequiredMixin, CreateView):
@@ -152,7 +154,7 @@ class MedicamentoDelete(SuperuserRequiredMixin, DeleteView):
 
 class EspecialidadDelete(SuperuserRequiredMixin, DeleteView):
     model = Especialidad
-    template_name= "core/especualidad_delete.html"
+    template_name= "core/especialidad_delete.html"
     success_url = reverse_lazy('core:especialidades')
     
 class NuevoUsuario(SuperuserRequiredMixin, CreateView):
@@ -265,12 +267,21 @@ class PacienteList(SuperuserRequiredMixin, ListView):
 class PacienteList2(SuperuserRequiredMixin, ListView):
     model = Paciente
     template_name = 'core/paciente2_list.html'
+    
+class PacienteList3(LoginRequiredMixin, ListView):
+    model = Paciente
+    template_name = 'core/paciente3_list.html'
 
 class PacienteDelete(SuperuserRequiredMixin, DeleteView):
     model = Paciente
     template_name= "core/paciente_delete.html"
     success_url = reverse_lazy('core:pacientes')
     
+class PacienteUpdate(SuperuserRequiredMixin, UpdateView):
+    model = Paciente
+    template_name = 'core/paciente_update.html'
+    form_class = NuevoPacienteForm
+    success_url = reverse_lazy('core:pacientes')
     
 class NuevaCategoria(SuperuserRequiredMixin, CreateView):
     model = Categoria
@@ -298,6 +309,7 @@ def ReestablecerPrecio(request, pk):
     tratamiento.save()
     return redirect('core:tratamientos')
 
+@user_passes_test(lambda u: u.is_superuser)
 def HabilitarCitas(request):
     if request.method == 'POST':
         form = CitaForm(request.POST)
@@ -346,7 +358,7 @@ def HabilitarCitas(request):
                 
  
             
-            return redirect('home')
+            return redirect('core:citas2')
             
     else:
         form = CitaForm()
@@ -354,17 +366,33 @@ def HabilitarCitas(request):
     return render(request, 'core/cita_form.html', {'form':form})
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def CitaList(request, paciente):
     citas = Cita.objects.filter(asignada = False)
     paciente = paciente
     
     return render(request, 'core/cita_list.html', {'citas':citas, 'paciente':paciente})
 
+@user_passes_test(lambda u: u.is_superuser)
 def CitaList2(request):
     citas = Cita.objects.filter(fecha = datetime.datetime.today()).order_by('fecha', 'hora')|Cita.objects.filter(fecha = datetime.datetime.today() + datetime.timedelta(days = 1)).order_by('fecha', 'hora')
     
     return render(request, 'core/cita_list2.html', {'citas':citas})
+@login_required
+def CitaList4(request):
+    citas = Cita.objects.filter(asignada = True, fecha = datetime.datetime.today()).order_by('fecha', 'hora')|Cita.objects.filter(asignada = True, fecha = datetime.datetime.today() + datetime.timedelta(days = 1)).order_by('fecha', 'hora')
+    dentistas = Dentista.objects.all()
+    
+    return render(request, 'core/cita_list4.html', {'citas':citas, 'dentista_list':dentistas})
 
+class CitaList3(LoginRequiredMixin, ListView):
+    model = Cita
+    template_name = 'core/cita_list3.html'
+    
+    def get_queryset(self):
+        return Cita.objects.filter(paciente = self.kwargs['paciente']).order_by('-fecha')
+
+@user_passes_test(lambda u: u.is_superuser)
 def ReservarCita(request, paciente, pk):
     cita = Cita.objects.get(id=pk)
     
@@ -372,4 +400,52 @@ def ReservarCita(request, paciente, pk):
     cita.asignada = True
     cita.save()
 
-    return redirect('home')
+    return redirect('core:citas2')
+
+class CitaDelete(SuperuserRequiredMixin, DeleteView):
+    model = Cita
+    template_name= "core/cita_delete.html"
+    success_url = reverse_lazy('core:citas2')
+    
+@login_required
+def Expediente(request, pk):
+    paciente = Paciente.objects.get(id=pk)
+    dentistas = Dentista.objects.all()
+    
+    return render(request, 'core/expediente.html', {'paciente':paciente, 'dentista_list':dentistas})
+
+class NuevaReceta(LoginRequiredMixin, CreateView):
+    model = Receta
+    form_class = NuevaRecetaForm
+
+    def get_success_url(self):
+        return reverse_lazy('core:expediente', args=[self.object.paciente.id])
+
+    def get_initial(self):
+        return {
+            'paciente':self.kwargs['paciente'],
+        }
+
+class RecetaList(LoginRequiredMixin, ListView):
+    model = Receta
+    def get_queryset(self):
+        return Receta.objects.filter(paciente = self.kwargs['paciente']).order_by('medicamento')
+
+class RecetaDelete(LoginRequiredMixin, DeleteView):
+    model = Receta
+    template_name= "core/categoria_delete.html"
+    success_url = reverse_lazy('home')
+    
+    
+class CitaUpdate(LoginRequiredMixin, UpdateView):
+    model = Cita
+    form_class = UpdateCitaForm
+    template_name = 'core/cita_update.html'
+    
+    def get_success_url(self):
+        return reverse_lazy('core:expediente', args=[self.object.paciente.id])
+    
+    def get_initial(self):
+        return {
+            'atendida':True,
+        }

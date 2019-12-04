@@ -225,12 +225,14 @@ class NuevaCategoriaForm(forms.ModelForm):
         
 class CitaForm(forms.ModelForm):
     
+    fecha = forms.DateField(required=True, widget=forms.DateInput(attrs={'readonly':'true', 'required':'True','class':'form-control datePicker','data-provide':'datepicker','data-date-end-date':'0d',"data-date-format":"dd/mm/yyyy" }))
+    
     class Meta: 
         model = Cita
         fields = ['fecha']
         widgets = {
             
-            'fecha': forms.DateInput(attrs={'readonly':'true','class':'form-control datePicker','data-provide':'datepicker','data-date-end-date':'0d',"data-date-format":"dd/mm/yyyy" }),
+            'fecha': forms.DateInput(attrs={'readonly':'true', 'required':'True','class':'form-control datePicker','data-provide':'datepicker','data-date-end-date':'0d',"data-date-format":"dd/mm/yyyy" }),
         
         }
         labels = {
@@ -245,3 +247,34 @@ class CitaForm(forms.ModelForm):
             raise forms.ValidationError('Ya hay citas habilitadas para esta fecha.')
         else:
             return fecha
+        
+        
+class NuevaRecetaForm(forms.ModelForm):
+    
+    medicamento =  MedicamentoModelChoiceField(queryset = Medicamento.objects.filter().order_by('id'), widget = forms.SelectMultiple(attrs={'class':'form-control'}))
+    class Meta: 
+        model = Receta
+        fields = ['paciente','medicamento', 'indicaciones']
+        widgets = {
+            'paciente': forms.HiddenInput(),
+            'indicaciones': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Indicaciones:'}),
+        }
+        labels = {
+            'indicaciones':'Indicaciones',
+        }
+        
+
+class UpdateCitaForm(forms.ModelForm):
+    
+    tratamiento =  TratamientoModelChoiceField(required = True, queryset = Tratamiento.objects.filter().order_by('id'), widget = forms.Select(attrs={'class':'form-control'}))
+
+    class Meta: 
+        model = Cita
+        fields = ['informe','tratamiento', 'atendida']
+        widgets = {
+            'informe': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Biografía: '}),
+            'atendida': forms.HiddenInput()
+        }
+        labels = {
+            'informe':'',
+        }

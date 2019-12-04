@@ -1,0 +1,70 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %} Recetas {% endblock %}
+
+{% block content %}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-11">
+            <div class="card white-content">
+                <div class="card-header row">
+                    <div class="col-md-8">
+                        <h1>Receta</h1>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped " id="">
+                            <thead class=" text-primary">
+                                <th>
+
+                                </th>
+                                <th>
+                                    <h4>Id</h4>
+                                </th>
+                                <th>
+                                    <h4>Medicamento</h4>
+                                </th>
+                                <th>
+                                    <h4>Indicaciones</h4>
+                                </th>
+                            </thead>
+
+                            <tbody>
+                                {% for receta in receta_list|dictsort:'id' %}
+                                <tr>
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        <p><b>
+                                                <font size="4">{{receta.id}}</font>
+                                            </b></p>
+                                    </td>
+                                    <td>
+                                        <p><b>
+                                                <font size="4">{% for medicamento in receta.medicamento.all %}{{ medicamento.nombre }}{% endfor %}</font>
+                                            </b></p>
+                                    </td>
+                                    <td>
+                                        <p><b>
+                                                <font size="4">{{receta.indicaciones}}</font>
+                                            </b></p>
+                                    </td>
+                                </tr>
+
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

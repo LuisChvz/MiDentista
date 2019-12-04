@@ -27,6 +27,25 @@
                 <div class="card-body">
                   <div class="table-responsive">
                       <table class="table table-striped " id="">
+                        <thead>
+                            <tr>
+                                    <th>
+                                  
+                                    </th>
+                                    <th >
+                                      <h3>ID</h3>
+                                    </th>
+                                    <th >
+                                      <h3>Nombre</h3>
+                                    </th> 
+                                    <th>                                     
+               
+                                    </th>
+                                    <th>
+                
+                                    </th>
+                            </tr>
+                        </thead>
                         <tbody>
                           {% for medicamento in medicamento_list|dictsort:'id' %}
                             <tr>  
@@ -38,14 +57,15 @@
                                     </td>
                                     <td >
                                       <p><b><font size="4">{{medicamento.nombre}}</font></b></p>
-                                    </td>                                      <td>
+                                    </td>                                      
+                                    <td>
                                       <a href="{% url 'core:updatemedicamento' medicamento.id|slugify%}" class="nav-item">
-                                      <i class="tim-icons icon-pencil" style= "color:black"></i>                            
+                                      <i class="tim-icons icon-pencil" style= "color:blue"></i>                            
                                       </a>                 
                                     </td>
                                     <td>
                                       <a href="{% url 'core:medicamentodelete' medicamento.id|slugify%}" >
-                                        <i class="tim-icons icon-trash-simple" style= "color:black"  ></i>                            
+                                        <i class="tim-icons icon-trash-simple" style= "color:red"  ></i>                            
                                       </a>                     
                                     </td> 
                             </tr>

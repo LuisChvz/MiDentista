@@ -60,6 +60,7 @@ class Paciente(models.Model):
     foto = models.ImageField(upload_to='patient/%Y/%m/%D/', null=True, blank=True)
     edad = models.IntegerField(default=0)
     alergias = models.ManyToManyField(Medicamento,  blank=True)
+    correo = models.EmailField(blank=True, null=True)
     
     def calcularEdad(self, id):
         paciente = Paciente.objects.get(id=id)

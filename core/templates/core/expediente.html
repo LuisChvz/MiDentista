@@ -1,0 +1,78 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %} Expediente {% endblock %}
+
+{% block content %}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-4">
+			<div class="card white-content">
+				<div class="card-body">
+					<img  src="{{paciente.foto.url}}"></a>
+				</div>
+			</div>
+	    </div>
+		<div class="col-md-7">
+			<div class="card white-content">
+				<div class="card-body">
+					<h1>{{paciente.nombres}} {{paciente.apellidos}}</h1>
+					<hr>
+					<table class="table table-sm" id="" width=100%>
+						<tr>
+							<td>
+								<p><font size = 5><i class="fas fa-birthday-cake"></i> &nbsp;&nbsp;&nbsp;{{paciente.nacimiento}}</font></p>
+							</td>
+							<td align = right>
+								<p><font size = 5><b>Edad:</b> {{paciente.edad}}</font></p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p><font size = 5><i class="fas fa-mobile-alt"></i> &nbsp;&nbsp;&nbsp;{{paciente.telefono}}</font></p>
+							</td>
+							<td align = right>
+								<p><font size = 5><i class="far fa-envelope"></i>&nbsp;&nbsp;&nbsp;{{paciente.correo}}</font></h3>
+							</td>
+						</tr>					
+					</table>
+					<hr>
+				</div>
+			</div>
+	    </div>
+		<div class="col-md-4">
+			<div class="card white-content">
+				<div class="card-body">
+					<h2> Alergias</h2>
+					<h3>{{paciente.alergias.nombre}}</h3>
+				</div>
+			</div>
+	    </div>
+		<div class="col-md-7">
+			<div class="card white-content">
+				<div class="card-body" align=center>
+					<hr>
+					<form action="{% url 'core:citas3' paciente.id|slugify%}">
+                		<input type="submit" class = "btn btn-info btn-block"  value = "Historial" style = 'width:50%'>
+              		</form>
+					<hr>
+					<form action="{% url 'core:recetas' paciente.id|slugify%}">
+                		<input type="submit" class = "btn btn-info btn-block"  value = "Recetas" style = 'width:50%'>
+              		</form>
+					<hr>
+					<form action="{% url 'core:nuevareceta' paciente.id|slugify%}">
+                		<input type="submit" class = "btn btn-info btn-block"  value = "Recetar" style = 'width:50%'>
+              		</form>
+					<hr>
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>		  
+
+
+    
+
+{% endblock %}

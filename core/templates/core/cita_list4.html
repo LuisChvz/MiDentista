@@ -1,0 +1,82 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %} Citas {% endblock %}
+
+{% block content %}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-11">
+			    <div class="card white-content">
+            <div class="card-header">
+                <h1>Seleccione una cita</h1>
+            </div>
+				    <div class="card-body">
+					    <div class="table-responsive">
+                <table class="table tablesorter " id="">
+                  <thead class=" text-primary">
+                    <script langiage="javascript" type="text/javascript">
+                        // RESALTAR LAS FILAS AL PASAR EL MOUSE
+                        function ResaltarFila(id_fila) {
+                          document.getElementById(id_fila).style.backgroundColor = '#BCDFFB';
+                        }
+                        // RESTABLECER EL FONDO DE LAS FILAS AL QUITAR EL FOCO
+                        function RestablecerFila(id_fila, color) {
+                          document.getElementById(id_fila).style.backgroundColor = color;
+                        }
+                        // CONVERTIR LAS FILAS EN LINKS
+                        function CrearEnlace(url) {
+                          location.href=url;
+                        }
+                      </script>
+                      <th>
+                        
+                      </th>
+                      <th>
+                        <h4>Fecha</h4>
+                      </th>
+                      <th>
+                        <h4>Hora</h4>
+                      </th>
+                       <th>
+                        <h4>Dentista</h4>
+                      </th>
+
+                  </thead>
+				   
+                  <tbody>
+                    {% for c in citas|dictsort:'id' %}
+                      {% if c.dentista.usuario == request.user %}
+                        {% if c.atendida %}
+                          <tr bgcolor = "#C4FFD5" id={{c.id}} onMouseOver="ResaltarFila({{c.id}});" onMouseOut="RestablecerFila({{c.id}}, '')" onClick="CrearEnlace('{% url 'core:updatecita' c.id|slugify %}');">
+                        {% else %}
+                          <tr  id={{c.id}} onMouseOver="ResaltarFila({{c.id}});" onMouseOut="RestablecerFila({{c.id}}, '')" onClick="CrearEnlace('{% url 'core:updatecita' c.id|slugify %}');">
+                        {% endif %}      
+                              <td>
+                          
+                              </td>
+                              <td >
+                                <p><b><font size="4">{{c.fecha}}</font></b></p>
+                              </td>
+                              <td >
+                                <p><b><font size="4">{{c.hora}}</font></b></p>
+                              </td>
+                              <td >
+                                <p><b><font size="4">{{c.paciente.nombres}} {{c.paciente.apellidos}}</font></b></p>
+                              </td>
+                        </tr>
+                      {% endif %}
+						
+                    {% endfor %}
+                  </tbody>
+                </table>
+				      </div>
+			      </div>
+	        </div>
+	      </div>
+      </div>
+    </div>	  
+
+{% endblock %}

@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
-{% block title %} PCitas {% endblock %}
+{% block title %} Citas {% endblock %}
 
 {% block content %}
 
@@ -30,6 +30,9 @@
                        <th>
                         <h4>Dentista</h4>
                       </th>
+                      <th>
+                        <h4>Paciente</h4>
+                      </th>
 
                   </thead>
 				   
@@ -48,6 +51,16 @@
                             <td >
                               <p><b><font size="4">{{c.dentista.usuario.first_name}} {{c.dentista.usuario.last_name}}</font></b></p>
                             </td>
+                            <td>
+                              <p><b><font size="4">{{c.paciente.nombres}} {{c.dentista.paciente.apellidos}}</font></b></p>
+                            </td>
+                            <td>
+                             <a href="{% url 'core:citadelete' c.id|slugify%}" >
+                                  <i class="tim-icons icon-trash-simple" style= "color:red"  ></i>                            
+                              </a>  
+                        
+                            </td>
+                            
 							        </tr>
 						
                     {% endfor %}
