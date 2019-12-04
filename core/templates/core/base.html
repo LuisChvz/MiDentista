@@ -100,12 +100,30 @@
 				{% endif %}
 
 				{% if request.user.is_superuser %}
-				<li>
-					<a href="#">
-						<i class="tim-icons icon-calendar-60"></i>
-						<p><font size=2>Citas</font></p>
-					</a>
-				</li>
+					<li class="nav-item">
+						<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages6" aria-expanded="true" aria-controls="collapsePages">
+							<i class="tim-icons icon-calendar-60"></i>
+							<p><font size=2>Citas</font></p>
+						</a>
+						<div id="collapsePages6" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+							<div class="py-2 collapse-inner rounded">
+								<ul>
+									<a href="{% url 'core:habilitarcitas' %}" class="nav-item">
+										<i class="tim-icons icon-refresh-02"></i>
+										<p>Habilitar</p>
+									</a>
+									<a href="{% url 'core:pacientes2' %}" class="nav-item">
+										<i class="tim-icons icon-single-copy-04"></i>
+										<p>Reservar</p>
+									</a>
+									<a href="{% url 'core:blog' %}" class="nav-item">
+										<i class="tim-icons icon-pencil"></i>
+										<p>Administrar</p>
+									</a>
+								</ul>
+							</div>
+						</div>
+					</li>
 				{% endif %}
 				
 				{% if request.user.is_superuser %}

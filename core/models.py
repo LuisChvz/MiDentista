@@ -77,12 +77,14 @@ class Receta(models.Model):
     
 class Cita(models.Model):
     id = models.AutoField(primary_key=True)
-    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
-    dentista = models.ForeignKey(Dentista, on_delete=models.CASCADE)
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, blank=True, null=True)
+    dentista = models.ForeignKey(Dentista, on_delete=models.CASCADE, blank=True, null=True)
     tratamiento = models.ForeignKey(Tratamiento, on_delete=models.CASCADE, null=True, blank=True)
-    hora = models.TimeField()
-    fecha = models.DateField()
+    hora = models.TimeField(blank=True, null=True)
+    fecha = models.DateField(blank=True, null=True)
     informe = models.CharField(max_length=1024, default="No se ha agregado informe.")
+    asignada = models.BooleanField(default=False)
+    atendida = models.BooleanField(default=False)
     
 class Publicacion(models.Model):
     id = models.AutoField(primary_key=True)

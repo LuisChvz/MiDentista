@@ -20,6 +20,7 @@ from core.urls import core_patterns
 from django.conf import settings
 from django.views.static import serve
 from django.conf.urls.static import static
+from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
 
 urlpatterns = [
@@ -28,7 +29,15 @@ urlpatterns = [
     path('core/', include(core_patterns)),
     
     path('accounts/', include('django.contrib.auth.urls')),
+    
+    path('reset/password_reset/', PasswordResetView.as_view(template_name = 'registration/recuperar_contra.html', email_template_name = 'registration/contra_recuperacion.html'), name='password_reset'),
+    path('password_reset_done/' , PasswordResetDoneView.as_view(template_name = 'registration/password_reset_done.html') , name='password_reset_done'),
+    path('reset/<uidb64>/<slug:token>/', PasswordResetConfirmView.as_view(template_name='registration/confirmacion_contra.html'), name='password_reset_confirm'),
+    path('reset/done',PasswordResetCompleteView.as_view(template_name = 'registration/password_reset_complete.html') ,name= "password_reset_complete"),
+    
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    
+

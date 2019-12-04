@@ -170,7 +170,7 @@ class MedicamentoModelChoiceField(forms.ModelMultipleChoiceField):
         
 class NuevoPacienteForm(forms.ModelForm):
     
-    alergias =  MedicamentoModelChoiceField(queryset = Medicamento.objects.filter().order_by('id'), required = True, widget = forms.SelectMultiple(attrs={'class':'form-control'}))
+    alergias =  MedicamentoModelChoiceField(queryset = Medicamento.objects.filter().order_by('id'), widget = forms.SelectMultiple(attrs={'class':'form-control'}))
 
     foto = forms.ImageField(required=True, label="Foto de perfil")
     class Meta: 
@@ -223,3 +223,25 @@ class NuevaCategoriaForm(forms.ModelForm):
             'nombre':''
         }
         
+class CitaForm(forms.ModelForm):
+    
+    class Meta: 
+        model = Cita
+        fields = ['fecha']
+        widgets = {
+            
+            'fecha': forms.DateInput(attrs={'readonly':'true','class':'form-control datePicker','data-provide':'datepicker','data-date-end-date':'0d',"data-date-format":"dd/mm/yyyy" }),
+        
+        }
+        labels = {
+
+            'fecha':'Fecha'
+        }
+        
+    def clean_fecha(self):
+        fecha = self.cleaned_data.get('fecha')
+        
+        if Cita.objects.filter(fecha = fecha).exists():
+            raise forms.ValidationError('Ya hay citas habilitadas para esta fecha.')
+        else:
+            return fecha

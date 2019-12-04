@@ -5,11 +5,12 @@ from django.views.generic.list import ListView
 from braces.views import SuperuserRequiredMixin, LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
-from .models import Publicacion, Especialidad, Tratamiento, Medicamento, Promocion, Dentista, Paciente, Categoria
+from .models import Publicacion, Especialidad, Tratamiento, Medicamento, Promocion, Dentista, Paciente, Categoria, Cita, Receta
 from .forms import NuevaPublicacionForm, NuevoMedicamentoForm, NuevaEspecialidadForm, NuevoTratamientoForm, NuevaPromocionForm
-from .forms import NuevoUserForm, NuevoDentistaForm, NuevoPacienteForm, NuevaCategoriaForm
+from .forms import NuevoUserForm, NuevoDentistaForm, NuevoPacienteForm, NuevaCategoriaForm, CitaForm
 from django import forms
 from django.contrib.auth.decorators import login_required, user_passes_test
+from time import time
 
 
 def home(request):
@@ -239,7 +240,7 @@ def NuevoPaciente(request):
             
             instancia.calcularEdad(ultimo)
 
-            return redirect('home')
+            return redirect('core:pacientes')
             
     else:
         form = NuevoPacienteForm()
@@ -257,9 +258,13 @@ class DentistaDelete(SuperuserRequiredMixin, DeleteView):
     template_name= "core/dentista_delete.html"
     success_url = reverse_lazy('core:dentistas')
 
-class PacienteList(LoginRequiredMixin, ListView):
+class PacienteList(SuperuserRequiredMixin, ListView):
     model = Paciente
     template_name = 'core/paciente_list.html'
+    
+class PacienteList2(SuperuserRequiredMixin, ListView):
+    model = Paciente
+    template_name = 'core/paciente2_list.html'
 
 class PacienteDelete(SuperuserRequiredMixin, DeleteView):
     model = Paciente
@@ -293,4 +298,72 @@ def ReestablecerPrecio(request, pk):
     tratamiento.save()
     return redirect('core:tratamientos')
 
+def HabilitarCitas(request):
+    if request.method == 'POST':
+        form = CitaForm(request.POST)
+        if form.is_valid():
+            dentistas = Dentista.objects.all()
+            
+            for d in dentistas:
+                Cita.objects.create(
+                    dentista = d,
+                    hora = '8:00:00',
+                )
+                Cita.objects.create(
+                    dentista = d,
+                    hora = '9:00:00',
+                )
+                Cita.objects.create(
+                    dentista = d,
+                    hora = '10:00:00',
+                )
+                Cita.objects.create(
+                    dentista = d,
+                    hora = '11:00:00',
+                )
+                Cita.objects.create(
+                    dentista = d,
+                    hora = '14:00:00',
+                )
+                Cita.objects.create(
+                    dentista = d,
+                    hora = '15:00:00',
+                )
+                Cita.objects.create(
+                    dentista = d,
+                    hora = '16:00:00',
+                )
+                Cita.objects.create(
+                    dentista = d,
+                    hora = '17:00:00',
+                )
+                
+                citas = Cita.objects.filter().order_by('-id')[:8]
+                
+                for c in citas:
+                    c.fecha = form.cleaned_data['fecha']
+                    c.save()
+                
+ 
+            
+            return redirect('home')
+            
+    else:
+        form = CitaForm()
+        
+    return render(request, 'core/cita_form.html', {'form':form})
+
+
+def CitaList(request, paciente):
+    citas = Cita.objects.filter(asignada = False)
+    paciente = paciente
     
+    return render(request, 'core/cita_list.html', {'citas':citas, 'paciente':paciente})
+
+def ReservarCita(request, paciente, pk):
+    cita = Cita.objects.get(id=pk)
+    
+    cita.paciente = Paciente.objects.get(id=paciente)
+    cita.save()
+
+    return redirect('core:citas')

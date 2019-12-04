@@ -128,3 +128,12 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'MiDentistaSCCLOD@gmail.com'
+EMAIL_HOST_PASSWORD = 'scclod2.0'
+EMAIL_PORT = 587
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+

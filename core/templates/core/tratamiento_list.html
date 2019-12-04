@@ -39,7 +39,23 @@
 								<img src = {{tratamiento.image.url}}>
 								<hr>
 								<p align=justify><font size=3>{{tratamiento.descripcion}}</font></p>
-								<h1 align = right>$ {{tratamiento.precioNeto}}</h1>
+								{% if request.user.is_superuser %}
+									<table class="table table-sm" id="" width=100%>
+										<tr>
+											<td>
+													<a href="{% url 'core:reestablecerprecio' tratamiento.id|slugify%}">
+														<i class="tim-icons icon-refresh-01" style= "color:black"></i>                            
+													</a> 
+											</td>
+											<td>
+												<h1 align = right>$ {{tratamiento.precioNeto}}</h1>
+											</td>
+										</tr>						
+									</table>
+								{% else %}
+									<h1 align = right>$ {{tratamiento.precioNeto}}</h1>
+								{% endif %}
+
 							</div>
 
 						</div>

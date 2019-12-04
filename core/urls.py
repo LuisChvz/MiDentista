@@ -3,7 +3,7 @@ from .views import home, NuevaPublicacion, NuevoMedicamento, NuevoTratamiento, N
 from .views import TratamientoList, MedicamentoList, TratamientoUpdate, MedicamentoUpdate,EspecialidadUpdate, EspecialidadList, TratamientoDelete, MedicamentoDelete,EspecialidadDelete
 from .views import NuevoUsuario, NuevoDentista, UpdateUsuario, UpdateDentista, ModificarPublicacion , EliminarPublicacion,  ModificarPromocion, EliminarPromocion
 from .views import NuevoPaciente, PacienteDelete, PacienteList, DentistaDelete, DentistaList, NuevaCategoria, CategoriaDelete, CategoriaList, CategoriaUpdate
-from .views import ReestablecerPrecio
+from .views import ReestablecerPrecio, HabilitarCitas, PacienteList2, CitaList, ReservarCita
 
 urlpatterns = [
     path('', home, name="home"),
@@ -36,6 +36,7 @@ core_patterns = ([
     path('nuevopaciente/', NuevoPaciente, name='nuevopaciente'),
     path('dentistas', DentistaList.as_view(), name = 'dentistas'),
     path('pacientes', PacienteList.as_view(), name = 'pacientes'),
+    path('pacientes2', PacienteList2.as_view(), name = 'pacientes2'),
     path('eliminardentista/<int:pk>', DentistaDelete.as_view(), name = 'dentistadelete'),
     path('eliminarpaciente/<int:pk>', PacienteDelete.as_view(), name = 'pacientedelete'),
     path('nuevacategoria', NuevaCategoria.as_view(), name = 'nuevacategoria'),
@@ -43,6 +44,9 @@ core_patterns = ([
     path('actualizarcategoria/<int:pk>', CategoriaUpdate.as_view(), name = 'updatecategoria'),
     path('eliminarcateogira/<int:pk>', CategoriaDelete.as_view(), name = 'categoriadelete'),
     path('reestablecerprecio/<int:pk>', ReestablecerPrecio, name = 'reestablecerprecio'),
+    path('habilitarcitas', HabilitarCitas, name = 'habilitarcitas'),
+    path('citas/<int:paciente>', CitaList, name = 'citas'),
+    path('reservarcita/<int:paciente>/<int:pk>', ReservarCita, name = 'reservarcita'),
     
     
 ], 'core')

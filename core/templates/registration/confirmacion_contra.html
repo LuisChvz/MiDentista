@@ -1,0 +1,48 @@
+
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-11">
+			<div class="card white-content">
+              	<div class="card-header">
+              		<h1><!-- INGRESE EL ENCABEZADO DE LA PÁGINA AQUI --></h1>
+				</div>
+				<div class="card-body">
+					{% if validlink %}
+					<form method="post">
+						{% csrf_token %}
+					<div class="modal-body">
+						{{ form.new_password1.errors }}
+					<label for="id_new_password1">Nueva contraseña</label>
+					{{ form.new_password1 }}
+
+					{{form.new_password2.errors }}
+					<br>
+					<label for="id_new_password2">Confirme contraseña</label>
+					{{ form.new_password2 }}
+					<br>
+					<br>
+					<input type="submit" value="Cambiar mi contraseña" name=""/>
+					</div>
+					</form>
+					{% else %}
+					<br><br>
+					<div class="col-md-15" align="center">
+					<h1 class="text-center">ENLACE INVALIDO: ESTE ENLACE YA HA SIDO UTILIZADO</h1>
+					</div>
+					{% endif %}
+					</div>
+			</div>
+	    </div>
+	</div>
+</div>
+
+{% endblock %}
+
+
+

@@ -1,0 +1,23 @@
+
+ {% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="col-md-15" align="center">
+<form method="post">
+  {% csrf_token %}
+
+  <div class="modal-body">
+    <h3 class="modal-title" align="center">Recuperar mi contraseña</h3> 
+<br>
+<h6>Ingrese la direccion del correo que ingreso al momento de registrar su cuenta</h6>
+   <br>
+    <label for="id_email" >Correo:</label>{{ form.email }} 
+    <input type="submit" onclick="comprobar()" value="Enviar"/>
+    <br>
+
+  </div>
+
+</form>
+</div>
+{% endblock %}
