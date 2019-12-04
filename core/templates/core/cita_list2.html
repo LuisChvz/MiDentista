@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
-{% block title %} Citas {% endblock %}
+{% block title %} PCitas {% endblock %}
 
 {% block content %}
 
@@ -11,26 +11,13 @@
         <div class="col-md-11">
 			    <div class="card white-content">
             <div class="card-header">
-                <h1>Seleccione un cupo</h1>
+                <h1>Citas habilitadas</h1>
             </div>
 				    <div class="card-body">
 					    <div class="table-responsive">
-                <table class="table tablesorter " id="">
+                <table class="table table-striped " id="">
                   <thead class=" text-primary">
-                    <script langiage="javascript" type="text/javascript">
-                        // RESALTAR LAS FILAS AL PASAR EL MOUSE
-                        function ResaltarFila(id_fila) {
-                          document.getElementById(id_fila).style.backgroundColor = '#BCDFFB';
-                        }
-                        // RESTABLECER EL FONDO DE LAS FILAS AL QUITAR EL FOCO
-                        function RestablecerFila(id_fila, color) {
-                          document.getElementById(id_fila).style.backgroundColor = color;
-                        }
-                        // CONVERTIR LAS FILAS EN LINKS
-                        function CrearEnlace(url) {
-                          location.href=url;
-                        }
-                      </script>
+                    
                       <th>
                         
                       </th>
@@ -48,7 +35,7 @@
 				   
                   <tbody>
                     {% for c in citas|dictsort:'id' %}
-                      <tr id={{c.id}} onMouseOver="ResaltarFila({{c.id}});" onMouseOut="RestablecerFila({{c.id}}, '')" onClick="CrearEnlace('{% url 'core:reservarcita' paciente c.id|slugify %}');">
+                    <tr>
                             <td>
                         
                             </td>

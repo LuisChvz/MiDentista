@@ -10,7 +10,7 @@ from .forms import NuevaPublicacionForm, NuevoMedicamentoForm, NuevaEspecialidad
 from .forms import NuevoUserForm, NuevoDentistaForm, NuevoPacienteForm, NuevaCategoriaForm, CitaForm
 from django import forms
 from django.contrib.auth.decorators import login_required, user_passes_test
-from time import time
+import datetime
 
 
 def home(request):
@@ -360,10 +360,16 @@ def CitaList(request, paciente):
     
     return render(request, 'core/cita_list.html', {'citas':citas, 'paciente':paciente})
 
+def CitaList2(request):
+    citas = Cita.objects.filter(fecha = datetime.datetime.today()).order_by('fecha', 'hora')|Cita.objects.filter(fecha = datetime.datetime.today() + datetime.timedelta(days = 1)).order_by('fecha', 'hora')
+    
+    return render(request, 'core/cita_list2.html', {'citas':citas})
+
 def ReservarCita(request, paciente, pk):
     cita = Cita.objects.get(id=pk)
     
     cita.paciente = Paciente.objects.get(id=paciente)
+    cita.asignada = True
     cita.save()
 
-    return redirect('core:citas')
+    return redirect('home')

@@ -3,7 +3,7 @@ from .views import home, NuevaPublicacion, NuevoMedicamento, NuevoTratamiento, N
 from .views import TratamientoList, MedicamentoList, TratamientoUpdate, MedicamentoUpdate,EspecialidadUpdate, EspecialidadList, TratamientoDelete, MedicamentoDelete,EspecialidadDelete
 from .views import NuevoUsuario, NuevoDentista, UpdateUsuario, UpdateDentista, ModificarPublicacion , EliminarPublicacion,  ModificarPromocion, EliminarPromocion
 from .views import NuevoPaciente, PacienteDelete, PacienteList, DentistaDelete, DentistaList, NuevaCategoria, CategoriaDelete, CategoriaList, CategoriaUpdate
-from .views import ReestablecerPrecio, HabilitarCitas, PacienteList2, CitaList, ReservarCita
+from .views import ReestablecerPrecio, HabilitarCitas, PacienteList2, CitaList, ReservarCita, CitaList2
 
 urlpatterns = [
     path('', home, name="home"),
@@ -47,6 +47,8 @@ core_patterns = ([
     path('habilitarcitas', HabilitarCitas, name = 'habilitarcitas'),
     path('citas/<int:paciente>', CitaList, name = 'citas'),
     path('reservarcita/<int:paciente>/<int:pk>', ReservarCita, name = 'reservarcita'),
+    path('citas2', CitaList2, name = 'citas2'),
+    
     
     
 ], 'core')
