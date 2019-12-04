@@ -4,7 +4,7 @@ from .views import TratamientoList, MedicamentoList, TratamientoUpdate, Medicame
 from .views import NuevoUsuario, NuevoDentista, UpdateUsuario, UpdateDentista, ModificarPublicacion , EliminarPublicacion,  ModificarPromocion, EliminarPromocion
 from .views import NuevoPaciente, PacienteDelete, PacienteList, DentistaDelete, DentistaList, NuevaCategoria, CategoriaDelete, CategoriaList, CategoriaUpdate
 from .views import ReestablecerPrecio, HabilitarCitas, PacienteList2, CitaList, ReservarCita, CitaList2, Expediente, CitaDelete, PacienteUpdate
-from .views import PacienteList3, CitaList4, NuevaReceta, RecetaList, RecetaDelete, CitaUpdate, CitaList3
+from .views import PacienteList3, CitaList4, NuevaReceta, RecetaList, RecetaDelete, CitaUpdate, CitaList3, NuevoUser, UserUpdate
 
 urlpatterns = [
     path('', home, name="home"),
@@ -59,6 +59,8 @@ core_patterns = ([
     path('eliminarreceta/<int:pk>', RecetaDelete.as_view(), name = 'recetadelete'),
     path('updatecita/<int:pk>', CitaUpdate.as_view(), name = 'updatecita'),
     path('citas3/<int:paciente>', CitaList3.as_view(), name = 'citas3'),
+    path('nuevousuario/', NuevoUser.as_view(), name='nuevouser'),
+    path('usuarioupdate/<int:pk>', UserUpdate.as_view(), name='userupdate'),
     
     
     

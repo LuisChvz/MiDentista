@@ -46,7 +46,7 @@
 			<div class="card white-content">
 				<div class="card-body">
 					<h2> Alergias</h2>
-					<h3>{{paciente.alergias.nombre}}</h3>
+					<h4>{% for alergia in paciente.alergias.all %}{{ alergia.nombre }}<hr>{% endfor %}</h4>
 				</div>
 			</div>
 	    </div>

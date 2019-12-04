@@ -449,3 +449,35 @@ class CitaUpdate(LoginRequiredMixin, UpdateView):
         return {
             'atendida':True,
         }
+        
+        
+class NuevoUser(LoginRequiredMixin, CreateView):
+    model = User
+    template_name = 'core/user_form.html'
+    form_class = NuevoUserForm
+    success_url = reverse_lazy('home')
+    
+    def get_form(self, form_class = None):
+        form = super(NuevoUser, self).get_form()
+        form.fields['username'].widget = forms.TextInput(attrs={'class':'form-control mb-2', 'placeholder':'Nombre de usuario:'})
+        form.fields['password1'].widget = forms.PasswordInput(attrs={'class':'form-control mb-2', 'placeholder':'Contraseña: '})
+        form.fields['password2'].widget = forms.PasswordInput(attrs={'class':'form-control mb-2', 'placeholder':'Confirmar contraseña: '})
+        return form
+    
+    def get_initial(self):
+        return {
+            'is_superuser':True,
+        }
+
+class UserUpdate(SuperuserRequiredMixin, UpdateView):
+    model = User
+    template_name = 'core/user_update.html'
+    form_class = NuevoUserForm
+    success_url = reverse_lazy('login')
+    
+    def get_form(self, form_class = None):
+        form = super(UserUpdate, self).get_form()
+        form.fields['username'].widget = forms.TextInput(attrs={'class':'form-control mb-2', 'placeholder':'Nombre de usuario:'})
+        form.fields['password1'].widget = forms.PasswordInput(attrs={'class':'form-control mb-2', 'placeholder':'Contraseña: '})
+        form.fields['password2'].widget = forms.PasswordInput(attrs={'class':'form-control mb-2', 'placeholder':'Confirmar contraseña: '})
+        return form

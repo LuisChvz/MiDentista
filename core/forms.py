@@ -105,12 +105,13 @@ class NuevoUserForm(UserCreationForm):
     
     class Meta: 
         model = User
-        fields = ['username','first_name','last_name','email', 'password1', 'password2']
+        fields = ['username','first_name','last_name','email', 'password1', 'password2', 'is_superuser']
         widgets = {
             'username': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Usuario:'}),
             'first_name': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Nombres:'}),
             'last_name': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Apellidos:'}),
             'email': forms.EmailInput(attrs={'class':'form-control', 'placeholder':'Email: '}),
+            'is_superuser':forms.HiddenInput()
 
         }
         labels = {
@@ -170,7 +171,7 @@ class MedicamentoModelChoiceField(forms.ModelMultipleChoiceField):
         
 class NuevoPacienteForm(forms.ModelForm):
     
-    alergias =  MedicamentoModelChoiceField(queryset = Medicamento.objects.filter().order_by('id'), widget = forms.SelectMultiple(attrs={'class':'form-control'}))
+    alergias =  MedicamentoModelChoiceField(required=False, queryset = Medicamento.objects.filter().order_by('id'), widget = forms.SelectMultiple(attrs={'class':'form-control'}))
 
     foto = forms.ImageField(required=True, label="Foto de perfil")
     class Meta: 

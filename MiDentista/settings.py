@@ -61,7 +61,7 @@ ROOT_URLCONF = 'MiDentista.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['core/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -135,5 +135,5 @@ EMAIL_HOST_USER = 'MiDentistaSCCLOD@gmail.com'
 EMAIL_HOST_PASSWORD = 'scclod2.0'
 EMAIL_PORT = 587
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 

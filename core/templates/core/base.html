@@ -220,11 +220,11 @@
 					<div id="collapsePages1" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
 						<div class="py-2 collapse-inner rounded">
 							<ul>
-								<a href="#" class="nav-item">
+								<a href="{% url 'core:nuevouser' %}" class="nav-item">
 									<i class="tim-icons icon-simple-add"></i>
 									<p>Agregar Usuario</p>
 								</a>
-								<a href='#' class="nav-item">
+								<a href="{% url 'core:userupdate'  request.user.id|slugify%}" class="nav-item">
 									<i class="tim-icons icon-pencil"></i>
 									<p>Editar Usuario</p>
 								</a>
@@ -279,15 +279,20 @@
 	        <nav>
 	          <ul>
 	            <li>
-	              <a href="http://www.ues.edu.sv">
-	                Universidad de El Salvador
-	              </a>
-	            </li>
-	            <li>
-	              <a href="http://www.fia.ues.edu.sv">
-	                Facultad de Ingeniería y Arquitectura
-	              </a>
-	            </li>
+								<a href="https://www.facebook.com/midentistaelsalvador/?__tn__=%2Cd%2CP-R&eid=ARBop29_FMMj6s6N8lBk5FJqiYxm9WbhSpn99C4Tgy9ALVqNPkIeceZif4kPst1xxqMN3NhRyeOBp6Ib">
+									<i class="fab fa-facebook-f"></i>
+								</a>
+							</li>
+							<li>
+								<a href="https://www.instagram.com/midentista_es/?hl=es-la">
+									<i class="fab fa-instagram"></i>
+								</a>
+							</li>
+							<li>
+								<a href="">
+									<i class="fab fa-whatsapp"></i>
+								</a>
+							</li>
 	          </ul>
 	        </nav>
 			<div class="copyright float-right">
