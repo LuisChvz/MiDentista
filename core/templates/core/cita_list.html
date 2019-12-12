@@ -48,21 +48,22 @@
 				   
                   <tbody>
                     {% for c in citas|dictsort:'id' %}
-                      <tr id={{c.id}} onMouseOver="ResaltarFila({{c.id}});" onMouseOut="RestablecerFila({{c.id}}, '')" onClick="CrearEnlace('{% url 'core:reservarcita' paciente c.id|slugify %}');">
-                            <td>
-                        
-                            </td>
-                            <td >
-                              <p><b><font size="4">{{c.fecha}}</font></b></p>
-                            </td>
-                            <td >
-                              <p><b><font size="4">{{c.hora}}</font></b></p>
-                            </td>
-                            <td >
-                              <p><b><font size="4">{{c.dentista.usuario.first_name}} {{c.dentista.usuario.last_name}}</font></b></p>
-                            </td>
-							        </tr>
-						
+                      {% if c.fecha >= hoy %}
+                        <tr id={{c.id}} onMouseOver="ResaltarFila({{c.id}});" onMouseOut="RestablecerFila({{c.id}}, '')" onClick="CrearEnlace('{% url 'core:reservarcita' paciente c.id|slugify %}');">
+                              <td>
+                          
+                              </td>
+                              <td >
+                                <p><b><font size="4">{{c.fecha}}</font></b></p>
+                              </td>
+                              <td >
+                                <p><b><font size="4">{{c.hora}}</font></b></p>
+                              </td>
+                              <td >
+                                <p><b><font size="4">{{c.dentista.usuario.first_name}} {{c.dentista.usuario.last_name}}</font></b></p>
+                              </td>
+                        </tr>
+                      {% endif %}
                     {% endfor %}
                   </tbody>
                 </table>

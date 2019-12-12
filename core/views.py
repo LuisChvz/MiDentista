@@ -369,9 +369,10 @@ def HabilitarCitas(request):
 @user_passes_test(lambda u: u.is_superuser)
 def CitaList(request, paciente):
     citas = Cita.objects.filter(asignada = False)
+    hoy = datetime.date.today()
     paciente = paciente
     
-    return render(request, 'core/cita_list.html', {'citas':citas, 'paciente':paciente})
+    return render(request, 'core/cita_list.html', {'citas':citas, 'paciente':paciente, 'hoy':hoy})
 
 @user_passes_test(lambda u: u.is_superuser)
 def CitaList2(request):
