@@ -232,7 +232,6 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navigation">
 				<ul class="navbar-nav ml-auto ">
-				{% block headers%}{% endblock %}
 				<li class="dropdown nav-item">
 					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
 					<div class="photo">
@@ -247,12 +246,12 @@
 						{% if request.user.is_superuser %}
 							<li class="nav-link">
 								<a href="{% url 'core:userupdate'  request.user.id|slugify%}" class="nav-item dropdown-item">
-									Editar Usuario
+									EDITAR USUARIO
 								</a>
 							</li>
 							<li class="nav-link">
 								<a href="{% url 'core:nuevouser' %}" class="nav-item dropdown-item">
-									Agregar Usuario
+									AGREGAR USUARIO
 								</a>
 							</li>
 							<div class="dropdown-divider"></div>
@@ -262,13 +261,13 @@
 							{% if request.user.is_authenticated %}
 								<li>
 									<a href="{% url 'logout' %}" class="nav-item dropdown-item">
-										Cerrar sesión
+										CERRAR SESIÓN
 									</a>
 								</li>
 							{% else %}
 								<li>
 									<a href="{% url 'login' %}" class="nav-item dropdown-item">
-										Iniciar sesión
+										INICIAR SESIÓN
 									</a>
 								</li>
 							{% endif %}
