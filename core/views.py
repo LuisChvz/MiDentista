@@ -114,6 +114,7 @@ def NuevaPromocion(request):
 class TratamientoList(ListView):
     model = Tratamiento
     template_name = 'core/tratamiento_list.html'
+    
 
 class MedicamentoList(LoginRequiredMixin, ListView):
     model = Medicamento
