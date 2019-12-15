@@ -210,44 +210,6 @@
 						</div>
 					</li>
 				{% endif %}
-
-				{% if request.user.is_superuser %}
-				<li class="nav-item">
-					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="true" aria-controls="collapsePages">
-						<i class="tim-icons icon-single-02"></i>
-						<p><font size=2>Usuario</font></p>
-					</a>
-					<div id="collapsePages1" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-						<div class="py-2 collapse-inner rounded">
-							<ul>
-								<a href="{% url 'core:nuevouser' %}" class="nav-item">
-									<i class="tim-icons icon-simple-add"></i>
-									<p>Agregar Usuario</p>
-								</a>
-								<a href="{% url 'core:userupdate'  request.user.id|slugify%}" class="nav-item">
-									<i class="tim-icons icon-pencil"></i>
-									<p>Editar Usuario</p>
-								</a>
-							</ul>
-						</div>
-					</div>
-				</li>
-				{% endif %}
-				{% if request.user.is_authenticated %}
-					<li>
-						<a href="{% url 'logout' %}">
-						<i class="tim-icons icon-button-power"></i>
-						<p><font size=2>Cerrar Sesión</font></p>
-						</a>
-					</li>
-				{% else %}
-					<li>
-						<a href="{% url 'login' %}">
-						<i class="tim-icons icon-button-power"></i>
-						<p><font size=2>Iniciar Sesión</font></p>
-						</a>
-					</li>
-				{% endif %}
 	        </ul>
 	      </div>
 	    </div>
@@ -282,25 +244,35 @@
 					</p>
 					</a>
 					<ul class="dropdown-menu dropdown-navbar">
-						<li class="nav-link">
-							<a href="{% url 'core:userupdate'  request.user.id|slugify%}" class="nav-item dropdown-item">
-								<i class="tim-icons icon-pencil"></i>
-								Editar Usuario
-							</a>
-						</li>
-						<li class="nav-link">
-							<a href="{% url 'core:nuevouser' %}" class="nav-item dropdown-item">
-								<i class="tim-icons icon-simple-add"></i>
-								Agregar Usuario
-							</a>
-						</li>
+						{% if request.user.is_superuser %}
+							<li class="nav-link">
+								<a href="{% url 'core:userupdate'  request.user.id|slugify%}" class="nav-item dropdown-item">
+									Editar Usuario
+								</a>
+							</li>
+							<li class="nav-link">
+								<a href="{% url 'core:nuevouser' %}" class="nav-item dropdown-item">
+									Agregar Usuario
+								</a>
+							</li>
+							<div class="dropdown-divider"></div>
+						{% endif %}
 
-						<div class="dropdown-divider"></div>
 						<li class="nav-link">
-							<a href="{% url 'logout' %}" class="nav-item dropdown-item">
-								<i class="tim-icons icon-button-power"></i>
-								Cerrar sesión
-							</a>
+							{% if request.user.is_authenticated %}
+								<li>
+									<a href="{% url 'logout' %}" class="nav-item dropdown-item">
+										Cerrar sesión
+									</a>
+								</li>
+							{% else %}
+								<li>
+									<a href="{% url 'login' %}" class="nav-item dropdown-item">
+										Iniciar sesión
+									</a>
+								</li>
+							{% endif %}
+							
 						</li>
 						</ul>
 					</li>
