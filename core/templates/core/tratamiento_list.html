@@ -6,19 +6,31 @@
 {% block content %}
 <div class="content">
 	<div class="btn-group" role="group">
-		{% for categoria in categorias|dictsort:'nombre'  %}
-			{% if categoria.id == filtro %}
-				<a href = "{% url 'core:tratamientos' categoria.id|slugify%}" class="btn btn-success">{{categoria.nombre}}</a>
-			{% else %}
-				<a href = "{% url 'core:tratamientos' categoria.id|slugify%}" class="btn btn-info">{{categoria.nombre}}</a>
-			{% endif %}
-		{% endfor %}
-			{% if filtro == 0 %}
-				<a href = "{% url 'core:tratamientos' 0|slugify%}" class="btn btn-success">Todos</a>
-			{% else %}
-				<a href = "{% url 'core:tratamientos' 0|slugify%}" class="btn btn-info">Todos</a>
-			{% endif %} 
+		<button id="btnGroupDrop1" type="button" class="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Filtrar por categoría
+		</button>
+		<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+
+				{% for categoria in categorias|dictsort:'nombre'  %}
+					
+						{% if categoria.id == filtro %}
+							<a href = "{% url 'core:tratamientos' categoria.id|slugify%}" class="dropdown-item" style="background:#96FFF0; color:black">{{categoria.nombre}}</a>
+						{% else %}
+							<a href = "{% url 'core:tratamientos' categoria.id|slugify%}" class="dropdown-item">{{categoria.nombre}}</a>
+						{% endif %}
+					
+
+				{% endfor %}
+					
+						{% if filtro == 0 %}
+							<a href = "{% url 'core:tratamientos' 0|slugify%}" class="dropdown-item" style="background:#C8FCF6; color:black"><b>Todos</b></a>
+						{% else %}
+							<a href = "{% url 'core:tratamientos' 0|slugify%}" class="dropdown-item">Todos</a>
+						{% endif %} 
+
+		</div>
 	</div>
+	
 	<hr>
 			<div class="row">
 				{% for tratamiento in tratamientos|dictsort:'nombre'  %}
