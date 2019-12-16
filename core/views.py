@@ -265,13 +265,43 @@ class PacienteList(SuperuserRequiredMixin, ListView):
     model = Paciente
     template_name = 'core/paciente_list.html'
     
+    def get_queryset(self):
+        busqueda = self.request.GET.get('buscador', '')
+        print(busqueda)
+        if busqueda:
+            queryset = Paciente.objects.filter(nombres__istartswith = busqueda)|Paciente.objects.filter(apellidos__istartswith = busqueda)|Paciente.objects.filter(id__istartswith = busqueda)
+            return queryset
+        else:
+            queryset = Paciente.objects.all()
+            return queryset
+    
 class PacienteList2(SuperuserRequiredMixin, ListView):
     model = Paciente
     template_name = 'core/paciente2_list.html'
     
+    def get_queryset(self):
+        busqueda = self.request.GET.get('buscador', '')
+        print(busqueda)
+        if busqueda:
+            queryset = Paciente.objects.filter(nombres__istartswith = busqueda)|Paciente.objects.filter(apellidos__istartswith = busqueda)|Paciente.objects.filter(id__istartswith = busqueda)
+            return queryset
+        else:
+            queryset = Paciente.objects.all()
+            return queryset
+    
 class PacienteList3(LoginRequiredMixin, ListView):
     model = Paciente
     template_name = 'core/paciente3_list.html'
+
+    def get_queryset(self):
+        busqueda = self.request.GET.get('buscador', '')
+        print(busqueda)
+        if busqueda:
+            queryset = Paciente.objects.filter(nombres__istartswith = busqueda)|Paciente.objects.filter(apellidos__istartswith = busqueda)|Paciente.objects.filter(id__istartswith = busqueda)
+            return queryset
+        else:
+            queryset = Paciente.objects.all()
+            return queryset
 
 class PacienteDelete(SuperuserRequiredMixin, DeleteView):
     model = Paciente

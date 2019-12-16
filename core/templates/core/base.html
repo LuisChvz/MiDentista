@@ -232,47 +232,51 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navigation">
 				<ul class="navbar-nav ml-auto ">
-				<li class="dropdown nav-item">
-					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-					<div class="photo">
-						<img class = "img-responsive" align="cent" src="{% static 'images/login2.png' %}">
-					</div>
-					<b class="caret d-none d-lg-block d-xl-block"></b>
-					<p class="d-lg-none">
-						Usuario
-					</p>
-					</a>
-					<ul class="dropdown-menu dropdown-navbar">
-						{% if request.user.is_superuser %}
-							<li class="nav-link">
-								<a href="{% url 'core:userupdate'  request.user.id|slugify%}" class="nav-item dropdown-item">
-									EDITAR USUARIO
-								</a>
-							</li>
-							<li class="nav-link">
-								<a href="{% url 'core:nuevouser' %}" class="nav-item dropdown-item">
-									AGREGAR USUARIO
-								</a>
-							</li>
-							<div class="dropdown-divider"></div>
-						{% endif %}
+					<li>
+						
 
-						<li class="nav-link">
-							{% if request.user.is_authenticated %}
-								<li>
-									<a href="{% url 'logout' %}" class="nav-item dropdown-item">
-										CERRAR SESIÓN
+					</li>
+					<li class="dropdown nav-item">
+						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+						<div class="photo">
+							<img class = "img-responsive" align="cent" src="{% static 'images/login2.png' %}">
+						</div>
+						<b class="caret d-none d-lg-block d-xl-block"></b>
+						<p class="d-lg-none">
+							Usuario
+						</p>
+						</a>
+						<ul class="dropdown-menu dropdown-navbar">
+							{% if request.user.is_superuser %}
+								<li class="nav-link">
+									<a href="{% url 'core:userupdate'  request.user.id|slugify%}" class="nav-item dropdown-item">
+										EDITAR USUARIO
 									</a>
 								</li>
-							{% else %}
-								<li>
-									<a href="{% url 'login' %}" class="nav-item dropdown-item">
-										INICIAR SESIÓN
+								<li class="nav-link">
+									<a href="{% url 'core:nuevouser' %}" class="nav-item dropdown-item">
+										AGREGAR USUARIO
 									</a>
 								</li>
+								<div class="dropdown-divider"></div>
 							{% endif %}
-							
-						</li>
+
+							<li class="nav-link">
+								{% if request.user.is_authenticated %}
+									<li>
+										<a href="{% url 'logout' %}" class="nav-item dropdown-item">
+											CERRAR SESIÓN
+										</a>
+									</li>
+								{% else %}
+									<li>
+										<a href="{% url 'login' %}" class="nav-item dropdown-item">
+											INICIAR SESIÓN
+										</a>
+									</li>
+								{% endif %}
+								
+							</li>
 						</ul>
 					</li>
 					<li class="separator d-lg-none"></li>
