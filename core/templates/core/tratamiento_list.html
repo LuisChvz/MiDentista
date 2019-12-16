@@ -5,10 +5,23 @@
 
 {% block content %}
 <div class="content">
-    <div class="row">
-
-				 
-				{% for tratamiento in tratamiento_list|dictsort:'nombre'  %}
+	<div class="btn-group" role="group">
+		{% for categoria in categorias|dictsort:'nombre'  %}
+			{% if categoria.id == filtro %}
+				<a href = "{% url 'core:tratamientos' categoria.id|slugify%}" class="btn btn-success">{{categoria.nombre}}</a>
+			{% else %}
+				<a href = "{% url 'core:tratamientos' categoria.id|slugify%}" class="btn btn-info">{{categoria.nombre}}</a>
+			{% endif %}
+		{% endfor %}
+			{% if filtro == 0 %}
+				<a href = "{% url 'core:tratamientos' 0|slugify%}" class="btn btn-success">Todos</a>
+			{% else %}
+				<a href = "{% url 'core:tratamientos' 0|slugify%}" class="btn btn-info">Todos</a>
+			{% endif %} 
+	</div>
+	<hr>
+			<div class="row">
+				{% for tratamiento in tratamientos|dictsort:'nombre'  %}
 					<div class="col-md-6">
 						<div class="card white-content">
 							<div class="card-body" align = center>

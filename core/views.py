@@ -111,9 +111,16 @@ def NuevaPromocion(request):
     return render(request, 'core/promocion_form.html', {'form':form})
 
 
-class TratamientoList(ListView):
-    model = Tratamiento
-    template_name = 'core/tratamiento_list.html'
+def TratamientoList(request, categoria):
+    filtro = categoria
+    categorias = Categoria.objects.all()
+    
+    if filtro == 0:
+        tratamientos = Tratamiento.objects.all()
+    else:
+        tratamientos = Tratamiento.objects.filter(categoria = filtro)
+    
+    return render(request, "core/tratamiento_list.html", {'tratamientos':tratamientos, 'categorias':categorias, 'filtro':filtro})
     
 
 class MedicamentoList(LoginRequiredMixin, ListView):
