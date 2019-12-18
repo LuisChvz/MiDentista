@@ -158,7 +158,7 @@
 										<i class="tim-icons icon-simple-add"></i>
 										<p>Agregar</p>
 									</a>
-									<a href="{% url 'core:tratamientos' 0|slugify%}" class="nav-item">
+									<a href="{% url 'core:tratamientos' 0 2|slugify%}" class="nav-item">
 										<i class="tim-icons icon-pencil"></i>
 										<p>Administrar</p>
 									</a>
@@ -177,7 +177,7 @@
 					</li>
 				{% else %}
 					<li>
-						<a href="{% url 'core:tratamientos' 0|slugify%}">
+						<a href="{% url 'core:tratamientos' 0 2|slugify%}">
 							<i class="tim-icons icon-notes"></i>
 							<p><font size=2>Servicios</font></p>
 						</a>

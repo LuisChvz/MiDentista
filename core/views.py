@@ -111,14 +111,23 @@ def NuevaPromocion(request):
     return render(request, 'core/promocion_form.html', {'form':form})
 
 
-def TratamientoList(request, categoria):
+def TratamientoList(request, categoria, orden):
     filtro = categoria
+    
+    order='nombre'
+    if orden==0:
+        order = 'precioNeto'
+    elif orden==1:
+        order = "-precioNeto"
+    elif orden==2:
+        order = "nombre"
+        
     categorias = Categoria.objects.all()
     
     if filtro == 0:
-        tratamientos = Tratamiento.objects.all()
+        tratamientos = Tratamiento.objects.filter().order_by(order)
     else:
-        tratamientos = Tratamiento.objects.filter(categoria = filtro)
+        tratamientos = Tratamiento.objects.filter(categoria = filtro).order_by(order)
     
     return render(request, "core/tratamiento_list.html", {'tratamientos':tratamientos, 'categorias':categorias, 'filtro':filtro})
     
