@@ -1,0 +1,82 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %} Eliminar {% endblock %}
+
+{% block content %}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-4">
+			<div class="card white-content">
+				<div class="card-body">
+					<img  src="{{receta.paciente.foto.url}}"></a>
+				</div>
+			</div>
+	    </div>
+		<div class="col-md-7">
+			<div class="card white-content">
+				<div class="card-body">
+					<h1>{{teceta.paciente.nombres}} {{receta.paciente.apellidos}}</h1>
+					<hr>
+					<table class="table table-sm" id="" width=100%>
+						<tr>
+							<td>
+								<p><font size = 5><i class="fas fa-birthday-cake"></i> &nbsp;&nbsp;&nbsp;{{receta.paciente.nacimiento}}</font></p>
+							</td>
+							<td align = right>
+								<p><font size = 5><b>Edad:</b> {{receta.paciente.edad}}</font></p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p><font size = 5><i class="fas fa-mobile-alt"></i> &nbsp;&nbsp;&nbsp;{{receta.paciente.telefono}}</font></p>
+							</td>
+							<td align = right>
+								<p><font size = 5><i class="far fa-envelope"></i>&nbsp;&nbsp;&nbsp;{{receta.paciente.correo}}</font></h3>
+							</td>
+						</tr>					
+					</table>
+					<hr>
+				</div>
+			</div>
+	    </div>
+		<div class="col-md-4">
+			<div class="card white-content">
+				<div class="card-body">
+					<h2> Alergias</h2>
+					<h3>{{receta.paciente.alergias.nombre}}</h3>
+				</div>
+			</div>
+	    </div>
+		<div class="col-md-7">
+			<div class="card white-content">
+              	<div class="card-header">
+              		<h1>Eliminar Receta</h1>
+				</div>
+
+				<div class="card-body">
+				
+  
+                        <form action="" method="post">{% csrf_token %}
+                              <p align = 'center'>¿Estás seguro de que quieres eliminar receta?</p>
+                              <input type="submit" class = "btn btn-danger btn-block" value="Sí, borrar"/>
+                        </form>
+      
+                        
+
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>		  
+
+
+    
+
+{% endblock %}
+
+
+
+

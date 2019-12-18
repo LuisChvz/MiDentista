@@ -1,0 +1,110 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %} Pacientes {% endblock %}
+
+{% block content %}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-11">
+			    <div class="card white-content">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-md-6">
+                <h2>Seleccione un paciente</h2>
+                </div>
+                <div class="col-md-6">
+                  <div class="container">
+                    <form class = '' methot = 'get'>
+                        <div class = 'row'>
+                          <div class = 'col-10 col-lg-11'>
+                            <label for ='inputPasword' class = 'sr-only'>Busqueda</label>
+                            <input class="form-control" type="search" name='buscador' id='inputPasword' placeholder='ID, Nombres, apellidos'></button>
+                          </div>
+                          <div>
+                            <button class="btn btn-link" type="submit"><i class="fas fa-search" style= "color:blue"></i></button>
+                          </div>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+				    <div class="card-body">
+					    <div class="table-responsive">
+                <table class="table tablesorter " id="">
+                  <thead class=" text-primary">
+                    <script langiage="javascript" type="text/javascript">
+                        // RESALTAR LAS FILAS AL PASAR EL MOUSE
+                        function ResaltarFila(id_fila) {
+                          document.getElementById(id_fila).style.backgroundColor = '#BCDFFB';
+                        }
+                        // RESTABLECER EL FONDO DE LAS FILAS AL QUITAR EL FOCO
+                        function RestablecerFila(id_fila, color) {
+                          document.getElementById(id_fila).style.backgroundColor = color;
+                        }
+                        // CONVERTIR LAS FILAS EN LINKS
+                        function CrearEnlace(url) {
+                          location.href=url;
+                        }
+                      </script>
+                      <th>
+                        
+                      </th>
+                      <th>
+                        <h4>Id</h4>
+                      </th>
+                      <th>
+                        <h4>Nombres</h4>
+                      </th>
+                       <th>
+                        <h4>Apellidos</h4>
+                      </th>
+                       <th>
+                        <h4>F.Nacimiento</h4>
+                      </th>
+                       <th>
+                        <h4>Teléfono</h4>
+                      </th>
+                      <th>
+                        
+                      </th>
+                  </thead>
+				   
+                  <tbody>
+                    {% for paciente in paciente_list|dictsort:'id' %}
+                      <tr id={{paciente.id}} onMouseOver="ResaltarFila({{paciente.id}});" onMouseOut="RestablecerFila({{paciente.id}}, '')" onClick="CrearEnlace('{% url 'core:citas' paciente.id|slugify %}');">
+                            <td>
+                        
+                            </td>
+                            <td >
+                              <p><b><font size="4">{{paciente.id}}</font></b></p>
+                            </td>
+                            <td >
+                              <p><b><font size="4">{{paciente.nombres}}</font></b></p>
+                            </td>
+                            <td >
+                              <p><b><font size="4">{{paciente.apellidos}}</font></b></p>
+                            </td>
+                            <td >
+                              <p><b><font size="4">{{paciente.nacimiento}}</font></b></p>
+                            </td>
+                            <td >
+                              <p><b><font size="4">{{paciente.telefono}}</font></b></p>
+                            </td>
+							        </tr>
+						
+                    {% endfor %}
+                  </tbody>
+                </table>
+				      </div>
+			      </div>
+	        </div>
+	      </div>
+      </div>
+    </div>	  
+
+{% endblock %}

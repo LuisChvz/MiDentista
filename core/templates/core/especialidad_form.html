@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}
+
+
+{% block title %} Nueva especialidad {% endblock %}
+
+{% block content %}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+			<div class="card white-content">
+              	<div class="card-header">
+              		<h1>Nueva especialidad</h1>
+				</div>
+
+				<div class="card-body">
+					<form action="" method="post">{% csrf_token %}
+						{{ form.as_p }}
+						<hr>
+						<div class = "text-center">
+						<input type="submit" class = "btn btn-primary btn-block" value= "Registrar Especialidad" />
+						</div>
+					</form>
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>		  
+
+
+    
+
+{% endblock %}

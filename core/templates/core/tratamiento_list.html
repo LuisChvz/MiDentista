@@ -1,0 +1,119 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %} Tratamientos {% endblock %}
+
+{% block content %}
+<div class="content">
+	<div class="btn-group" role="group">
+		<button id="btnGroupDrop1" type="button" class="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Filtrar por categoría
+		</button>
+		<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+
+				{% for categoria in categorias|dictsort:'nombre'  %}
+					
+						{% if categoria.id == filtro %}
+							<a href = "{% url 'core:tratamientos' categoria.id 2|slugify%}" class="dropdown-item" style="background:#96FFF0; color:black"><b>{{categoria.nombre}}</b></a>
+						{% else %}
+							<a href = "{% url 'core:tratamientos' categoria.id 2|slugify%}" class="dropdown-item">{{categoria.nombre}}</a>
+						{% endif %}
+					
+
+				{% endfor %}
+					
+						{% if filtro == 0 %}
+							<a href = "{% url 'core:tratamientos' 0 2|slugify%}" class="dropdown-item" style="background:#C8FCF6; color:black"><b>Todos</b></a>
+						{% else %}
+							<a href = "{% url 'core:tratamientos' 0 2|slugify%}" class="dropdown-item">Todos</a>
+						{% endif %} 
+
+		</div>
+	</div>
+
+
+	<div class="btn-group" role="group">
+		<button id="btnGroupDrop2" type="button" class="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Ordenar por
+		</button>
+		<div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
+
+				{% for categoria in categorias|dictsort:'nombre'  %}
+					
+						{% if categoria.id == filtro %}
+							<a href = "{% url 'core:tratamientos' categoria.id 0|slugify%}" class="dropdown-item"><b>Precio: </b>menor a mayor</a>
+							<a href = "{% url 'core:tratamientos' categoria.id 1|slugify%}" class="dropdown-item"><b>Precio: </b>mayor a menor</a>
+							<a href = "{% url 'core:tratamientos' categoria.id 2|slugify%}" class="dropdown-item">Nombre</a>
+						{% endif %}
+					
+				{% endfor %}
+
+						{% if filtro == 0 %}
+							<a href = "{% url 'core:tratamientos' 0 0|slugify%}" class="dropdown-item"><b>Precio: </b>menor a mayor</a>
+							<a href = "{% url 'core:tratamientos' 0 1|slugify%}" class="dropdown-item"><b>Precio: </b>mayor a menor</a>
+							<a href = "{% url 'core:tratamientos' 0 2|slugify%}" class="dropdown-item">Nombre</a>
+						{% endif %}
+		</div>
+	</div>
+	
+	<hr>
+			<div class="row">
+				{% for tratamiento in tratamientos %}
+					<div class="col-md-6">
+						<div class="card white-content">
+							<div class="card-body" align = center>
+								
+								<table class="table table-sm" id="" width=100%>
+									<tr>
+										{% if request.user.is_superuser %}
+											<td>
+												<a href="{% url 'core:tratamientoupdate' tratamiento.id|slugify%}">
+													<i class="tim-icons icon-pencil" style= "color:black"></i>                            
+												</a> 
+											</td>
+										{% endif %}
+										<td align = center>
+											<h1 align=center>{{tratamiento.nombre}}</h1>
+										</td>
+										{% if request.user.is_superuser %}
+											<td align = right>
+												<a href= "{% url 'core:tratamientodelete' tratamiento.id|slugify%}">
+													<i class="tim-icons icon-trash-simple" style= "color:black"></i>                            
+												</a>
+											</td>
+										{% endif %}
+									</tr>						
+								</table>
+								<img src = {{tratamiento.image.url}}>
+								<hr>
+								<p align=justify><font size=3>{{tratamiento.descripcion}}</font></p>
+								{% if request.user.is_superuser %}
+									<table class="table table-sm" id="" width=100%>
+										<tr>
+											<td>
+													<a href="{% url 'core:reestablecerprecio' tratamiento.id|slugify%}">
+														<i class="tim-icons icon-refresh-01" style= "color:black"></i>                            
+													</a> 
+											</td>
+											<td>
+												<h1 align = right>$ {{tratamiento.precioNeto}}</h1>
+											</td>
+										</tr>						
+									</table>
+								{% else %}
+									<h1 align = right>$ {{tratamiento.precioNeto}}</h1>
+								{% endif %}
+
+							</div>
+
+						</div>
+					</div>
+				  {% endfor %}
+                     
+	</div>
+</div>		  
+
+
+    
+
+{% endblock %}

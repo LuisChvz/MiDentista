@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+
+
+{% block title %} Habilitar citas {% endblock %}
+
+{% block content %}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+			<div class="card white-content">
+              	<div class="card-header">
+              		<h1>Seleccione una fecha</h1>
+				</div>
+
+				<div class="card-body">
+					<form action="" method="post">{% csrf_token %}
+						{{ form.as_p }}
+						<hr>
+						<div class = "text-center">
+						<input type="submit" class = "btn btn-primary btn-block" value= "Habilitar citas" />
+						</div>
+					</form>
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>		  
+
+<script type="text/javascript">
+  $(function(){
+    $(".datePicker").datepicker({
+      format:'mm/dd/yyyy',
+      uiLibrary: 'bootstrap4',
+      locale: 'es-es',
+      maxDate: new Date(new Date().setDate(new Date().getDate()+10)),
+	  minDate: new Date()
+    });
+  });
+
+</script>
+    
+
+{% endblock %}

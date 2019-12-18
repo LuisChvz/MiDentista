@@ -1,0 +1,95 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %} Dentistas {% endblock %}
+
+{% block content %}
+
+
+<div class="content">
+
+	<div class="btn-group" role="group">
+		<button id="btnGroupDrop1" type="button" class="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Filtrar por especialidad
+		</button>
+		<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+
+				{% for especialidad in especialidades|dictsort:'nombre'  %}
+					
+						{% if especialidad.id == filtro %}
+							<a href = "{% url 'core:dentistas' especialidad.id|slugify%}" class="dropdown-item" style="background:#96FFF0; color:black"><b>{{especialidad.nombre}}</b></a>
+						{% else %}
+							<a href = "{% url 'core:dentistas' especialidad.id|slugify%}" class="dropdown-item">{{especialidad.nombre}}</a>
+						{% endif %}
+					
+
+				{% endfor %}
+					
+						{% if filtro == 0 %}
+							<a href = "{% url 'core:dentistas' 0|slugify%}" class="dropdown-item" style="background:#C8FCF6; color:black"><b>Todos</b></a>
+						{% else %}
+							<a href = "{% url 'core:dentistas' 0|slugify%}" class="dropdown-item">Todos</a>
+						{% endif %} 
+
+		</div>
+	</div>
+    <div class="row">
+
+				 
+				{% for dentista in dentistas|dictsort:'id'  %}
+					<div class="col-md-6">
+						<div class="card white-content">
+							<div class="card-body" align = center>
+								
+								<table class="table table-sm" id="" width=100%>
+									<tr>
+										{% if request.user.is_superuser %}
+											<td>
+												<a href="{% url 'core:updatedentista' dentista.id|slugify%}">
+													<i class="tim-icons icon-pencil" style= "color:black"></i>                            
+												</a>
+											</td>
+										{% endif %}
+										<td align = center>
+											<h1 align=center>{{dentista.usuario.first_name}} {{dentista.usuario.last_name}}</h1>
+										</td>
+										{% if request.user.is_superuser %}
+											<td align = right>
+												<a href="{% url 'core:dentistadelete' dentista.usuario.id|slugify%}" >
+													<i class="tim-icons icon-trash-simple" style= "color:black"></i>                            
+												</a>
+											</td>
+										{% endif %}
+									</tr>						
+								</table>
+								<img src = {{dentista.foto.url}}>
+								<hr>
+								<p align=justify><font size=3 color=black><b>Especialidad:</b> {{dentista.especialidad.nombre}}</font></p>
+								<hr>
+								<p align=justify><font size=3>{{dentista.biografia}}</font></p>
+								<hr>
+								{% if request.user.is_superuser %}
+									<table class="table table-sm" id="" width=100%>
+										<tr>
+											<td width=30%>
+												<p align=left><font size=3> <b>Tel:</b> {{dentista.telefono}}</font><p>
+											</td>
+											<td width=70%>
+												<p align=right><font size=3><b> Email: </b> {{dentista.usuario.email}}</font><p>
+											</td>										
+										</tr>
+									</table>
+								{% endif %}
+							</div>
+
+						</div>
+					</div>
+				  {% endfor %}
+                     
+	</div>
+</div>		  
+
+
+    
+
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %} Pacientes {% endblock %}
+
+{% block content %}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-11">
+			    <div class="card white-content" >
+            <div class="card-header">
+              <div class="row">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-8">
+                  <div class="container">
+                    <form class = '' methot = 'get'>
+                        <div class = 'row'>
+                          <div class = 'col-8 col-lg-8'>
+                            <label for ='inputPasword' class = 'sr-only'>Busqueda</label>
+                            <input class="form-control" type="search" name='buscador' id='inputPasword' placeholder='ID, Nombres, apellidos'></button>
+                          </div>
+                          <div>
+                            <button class="btn btn-link" type="submit"><i class="fas fa-search" style= "color:blue"></i></button>
+                          </div>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                </div>
+              </div>
+            </div>
+				    <div class="card-body">
+					    <div class="table-responsive">
+                <table class="table tablesorter " id="">
+                  <thead class=" text-primary">
+                      <th>
+                        
+                      </th>
+                      <th>
+                        <h4><b>Id</b></h4>
+                      </th>
+                      <th>
+                        <h4><b>Nombres</b></h4>
+                      </th>
+                       <th>
+                        <h4><b>Apellidos</b></h4>
+                      </th>
+                       <th>
+                        <h4><b>F.Nacimiento</b></h4>
+                      </th>
+                       <th>
+                        <h4><b>Teléfono</b></h4>
+                      </th>
+                      <th>
+                        
+                      </th>
+                  </thead>
+				   
+                  <tbody>
+                    {% for paciente in paciente_list|dictsort:'id' %}
+                      <tr>
+                            <td>
+                        
+                            </td>
+                            <td >
+                              <p><b><font size="4">{{paciente.id}}</font></b></p>
+                            </td>
+                            <td >
+                              <p><b><font size="4">{{paciente.nombres}}</font></b></p>
+                            </td>
+                            <td >
+                              <p><b><font size="4">{{paciente.apellidos}}</font></b></p>
+                            </td>
+                            <td >
+                              <p><b><font size="4">{{paciente.nacimiento}}</font></b></p>
+                            </td>
+                            <td >
+                              <p><b><font size="4">{{paciente.telefono}}</font></b></p>
+                            </td>
+                            <td>
+                               <a href="{% url 'core:updatepaciente' paciente.id|slugify%}" class="nav-item">
+                              <i class="tim-icons icon-pencil" style= "color:blue"></i>                            
+                               </a>                 
+                            </td>
+                            <td>
+                                <a href="{% url 'core:pacientedelete' paciente.id|slugify%}" >
+                                  <i class="tim-icons icon-trash-simple" style= "color:red"  ></i>                            
+                              </a>                     
+							
+                            </td> 
+							        </tr>
+						
+                    {% endfor %}
+                  </tbody>
+                </table>
+				      </div>
+			      </div>
+	        </div>
+	      </div>
+      </div>
+    </div>	  
+
+{% endblock %}
