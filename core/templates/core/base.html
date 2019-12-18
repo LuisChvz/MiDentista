@@ -84,7 +84,7 @@
 				</li>
 			{% else %}
 				<li>
-					<a href="{% url 'core:dentistas' %}">
+					<a href="{% url 'core:dentistas' 0|slugify%}">
 						<i class="tim-icons icon-notes"></i>
 						<p><font size=2>Dentistas</font></p>
 					</a>
