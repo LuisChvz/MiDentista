@@ -28,7 +28,7 @@ SECRET_KEY = '+_514gtkf4zo457t!e(2rj&r)v_!70akn0)nevb74idb#e0t9@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['midentistasv.pythonanywhere.com', '127.0.0.1']
+ALLOWED_HOSTS = ['www.midentistasv.com','midentistasv.com', '127.0.0.1']
 
 
 # Application definition
