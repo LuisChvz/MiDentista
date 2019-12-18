@@ -19,7 +19,7 @@
 									<tr>
 										{% if request.user.is_superuser %}
 											<td>
-												<a href="{% url 'core:updatedentista' dentista.id|slugify%}">
+												<a href="{% url 'core:updateusuariod' dentista.usuario.id|slugify%}">
 													<i class="tim-icons icon-pencil" style= "color:black"></i>                            
 												</a>
 											</td>
@@ -29,7 +29,7 @@
 										</td>
 										{% if request.user.is_superuser %}
 											<td align = right>
-												<a href="{% url 'core:dentistadelete' dentista.id|slugify%}" >
+												<a href="{% url 'core:dentistadelete' dentista.usuario.id|slugify%}" >
 													<i class="tim-icons icon-trash-simple" style= "color:black"></i>                            
 												</a>
 											</td>

@@ -135,6 +135,16 @@ def TratamientoList(request, categoria, orden):
 class MedicamentoList(LoginRequiredMixin, ListView):
     model = Medicamento
     template_name = 'core/medicamento_list.html'
+    
+    def get_queryset(self):
+        busqueda = self.request.GET.get('buscador', '')
+        print(busqueda)
+        if busqueda:
+            queryset = Medicamento.objects.filter(nombre__istartswith = busqueda)|Medicamento.objects.filter(id__istartswith = busqueda)
+            return queryset
+        else:
+            queryset = Medicamento.objects.all()
+            return queryset
 
 class EspecialidadList(LoginRequiredMixin, ListView):
     model = Especialidad
@@ -273,7 +283,7 @@ class DentistaList(ListView):
        
             
 class DentistaDelete(SuperuserRequiredMixin, DeleteView):
-    model = Dentista
+    model = User
     template_name= "core/dentista_delete.html"
     success_url = reverse_lazy('core:dentistas')
 

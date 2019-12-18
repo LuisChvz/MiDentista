@@ -12,7 +12,19 @@
 			      <div class="card white-content">
               	<div class="card-header row">
                   <div class="col-md-8">
-                    <h1>Medicamentos</h1>
+                    <div class="container">
+                      <form class = '' methot = 'get'>
+                          <div class = 'row'>
+                            <div class = 'col-8 col-lg-8'>
+                              <label for ='inputPasword' class = 'sr-only'>Busqueda</label>
+                              <input class="form-control" type="search" name='buscador' id='inputPasword' placeholder='ID, Nombre'></button>
+                            </div>
+                            <div>
+                              <button class="btn btn-link" type="submit"><i class="fas fa-search" style= "color:blue"></i></button>
+                            </div>
+                          </div>
+                      </form>
+                    </div>
                   </div>
                   <div class="col-md-4" align=right>
                     <a href="{% url 'core:nuevomedicamento' %}">
