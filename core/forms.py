@@ -176,13 +176,14 @@ class NuevoPacienteForm(forms.ModelForm):
     foto = forms.ImageField(required=True, label="Foto de perfil")
     class Meta: 
         model = Paciente
-        fields = ['nombres','apellidos', 'nacimiento', 'telefono', 'alergias', 'foto']
+        fields = ['nombres','apellidos', 'correo', 'nacimiento', 'telefono', 'alergias', 'foto']
         widgets = {
             'nombres': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Nombres:'}),
             'apellidos': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Apellidos:'}),
             'telefono': forms.NumberInput(attrs={'class':'form-control', 'placeholder':'Telefono: '}),
             'nacimiento': forms.DateInput(attrs={'readonly':'true','class':'form-control datePicker','data-provide':'datepicker','data-date-end-date':'0d',"data-date-format":"dd/mm/yyyy" }),
-            'foto': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'})
+            'foto': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
+            'correo': forms.EmailInput(attrs={'class':'form-control', 'placeholder':'ejemplo@gmail.com:'})
         }
         labels = {
             'telefono':'Telefono',

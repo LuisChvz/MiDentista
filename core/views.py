@@ -343,11 +343,30 @@ class PacienteDelete(SuperuserRequiredMixin, DeleteView):
     template_name= "core/paciente_delete.html"
     success_url = reverse_lazy('core:pacientes')
     
-class PacienteUpdate(SuperuserRequiredMixin, UpdateView):
-    model = Paciente
-    template_name = 'core/paciente_update.html'
-    form_class = NuevoPacienteForm
-    success_url = reverse_lazy('core:pacientes')
+def PacienteUpdate(request, pk):
+    paciente = Paciente.objects.get(id=pk)
+    if request.method == 'POST':
+        form = NuevoPacienteForm(request.POST, request.FILES)
+        if form.is_valid():
+            
+            paciente.nombres = form.cleaned_data['nombres']
+            paciente.apellidos = form.cleaned_data['apellidos']
+            paciente.nacimiento = form.cleaned_data['nacimiento']
+            paciente.telefono = form.cleaned_data['telefono']
+            paciente.foto = form.cleaned_data['foto']
+            paciente.alergias.set(form.cleaned_data['alergias']) 
+            paciente.correo = form.cleaned_data['correo']
+            paciente.save()
+            
+            Paciente().calcularEdad(pk)
+
+            return redirect('core:pacientes')
+            
+    else:
+        form = NuevoPacienteForm(instance=paciente)
+        
+        
+    return render(request, 'core/paciente_form.html', {'form':form})
     
 class NuevaCategoria(SuperuserRequiredMixin, CreateView):
     model = Categoria
