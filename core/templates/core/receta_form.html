@@ -8,11 +8,59 @@
 
 <div class="content">
     <div class="row">
-        <div class="col-md-11">
+        <div class="col-md-4">
 			<div class="card white-content">
-              	<div class="card-header">
-              		<h1>Nueva Receta</h1>
+				<div class="card-body">
+					<img  src="{{paciente.foto.url}}"></a>
 				</div>
+			</div>
+	    </div>
+		<div class="col-md-7">
+			<div class="card white-content">
+				<div class="card-body">
+					<h1>{{paciente.nombres}} {{paciente.apellidos}}</h1>
+					<hr>
+					<table class="table table-sm" id="" width=100%>
+						<tr>
+							<td>
+								<p><font size = 5><i class="fas fa-birthday-cake"></i> &nbsp;&nbsp;&nbsp;{{paciente.nacimiento}}</font></p>
+							</td>
+							<td align = right>
+								<p><font size = 5><b>Edad:</b> {{paciente.edad}}</font></p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p><font size = 5><i class="fas fa-mobile-alt"></i> &nbsp;&nbsp;&nbsp;{{paciente.telefono}}</font></p>
+							</td>
+							<td align = right>
+								<p><font size = 5><i class="far fa-envelope"></i>&nbsp;&nbsp;&nbsp;{{paciente.correo}}</font></h3>
+							</td>
+						</tr>					
+					</table>
+					<hr>
+				</div>
+			</div>
+	    </div>
+		<div class="col-md-4">
+			<div class="card white-content">
+				<div class="card-body">
+					<h2> Alergias</h2>
+					<h4>{% for alergia in paciente.alergias.all %}{{ alergia.nombre }}<hr>{% endfor %}</h4>
+				</div>
+			</div>
+	    </div>
+        <div class="col-md-7">
+			<div class="card white-content">
+              	<div class="card-header row">
+                    <div class="col-md-6">
+                        <h2>Nueva receta</h2>
+                    </div>
+                    <div class="col-md-6" align=right>
+                        <a href={% url 'core:expediente' paciente.id|slugify%}><font size="5"><i class="tim-icons icon-minimal-left"></i></font></a>
+                    </div>
+
+                </div>
 
 				<div class="card-body">
 					<form method="post" enctype="multipart/form-data">{% csrf_token %}

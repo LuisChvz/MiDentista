@@ -52,8 +52,11 @@
 	    </div>
 		<div class="col-md-8">
 			<div class="card white-content">
+				<div class="card-header" align=center>
+					<h4><b>Agregar informe</b></h4>
+				</div>
 				<div class="card-body">
-					<hr>
+
 					<form method="post" >{% csrf_token %}
 						{{ form.as_p }}
 						<hr>

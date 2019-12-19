@@ -113,6 +113,7 @@ def NuevaPromocion(request):
 
 def TratamientoList(request, categoria, orden):
     filtro = categoria
+    dentistas = Dentista.objects.all()
     
     order='nombre'
     if orden==0:
@@ -129,7 +130,7 @@ def TratamientoList(request, categoria, orden):
     else:
         tratamientos = Tratamiento.objects.filter(categoria = filtro).order_by(order)
     
-    return render(request, "core/tratamiento_list.html", {'tratamientos':tratamientos, 'categorias':categorias, 'filtro':filtro})
+    return render(request, "core/tratamiento_list.html", {'tratamientos':tratamientos, 'categorias':categorias, 'filtro':filtro, 'dentista_list':dentistas})
     
 
 class MedicamentoList(LoginRequiredMixin, ListView):
@@ -279,7 +280,7 @@ def NuevoPaciente(request):
 
 def DentistaList(request, especialidad):
     filtro = especialidad
-    
+    dentistas2 = Dentista.objects.all()
         
     especialidades = Especialidad.objects.all()
     
@@ -288,7 +289,7 @@ def DentistaList(request, especialidad):
     else:
         dentistas = Dentista.objects.filter(especialidad = especialidad)
     
-    return render(request, "core/dentista_list.html", {'dentistas':dentistas, 'especialidades':especialidades, 'filtro':filtro})
+    return render(request, "core/dentista_list.html", {'dentistas':dentistas, 'especialidades':especialidades, 'filtro':filtro, 'dentista_list':dentistas2})
        
             
 class DentistaDelete(SuperuserRequiredMixin, DeleteView):
@@ -322,8 +323,8 @@ class PacienteList2(SuperuserRequiredMixin, ListView):
             return queryset
         else:
             queryset = Paciente.objects.all()
-            return queryset
-    
+            return queryset    
+
 class PacienteList3(LoginRequiredMixin, ListView):
     model = Paciente
     template_name = 'core/paciente3_list.html'
@@ -337,12 +338,19 @@ class PacienteList3(LoginRequiredMixin, ListView):
         else:
             queryset = Paciente.objects.all()
             return queryset
+        
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['dentista_list'] = Dentista.objects.all()
+        return context
 
 class PacienteDelete(SuperuserRequiredMixin, DeleteView):
     model = Paciente
     template_name= "core/paciente_delete.html"
     success_url = reverse_lazy('core:pacientes')
     
+    
+@user_passes_test(lambda u: u.is_superuser)
 def PacienteUpdate(request, pk):
     paciente = Paciente.objects.get(id=pk)
     if request.method == 'POST':
@@ -453,7 +461,7 @@ def HabilitarCitas(request):
 
 @user_passes_test(lambda u: u.is_superuser)
 def CitaList(request, paciente):
-    citas = Cita.objects.filter(asignada = False)
+    citas = Cita.objects.filter(asignada = False, fecha = datetime.datetime.today()).order_by('fecha', 'hora')|Cita.objects.filter(asignada = False, fecha = datetime.datetime.today() + datetime.timedelta(days = 1)).order_by('fecha', 'hora')|Cita.objects.filter(asignada = False, fecha = datetime.datetime.today() + datetime.timedelta(days = 2)).order_by('fecha', 'hora')|Cita.objects.filter(asignada = False, fecha = datetime.datetime.today() + datetime.timedelta(days = 3)).order_by('fecha', 'hora')|Cita.objects.filter(asignada = False, fecha = datetime.datetime.today() + datetime.timedelta(days = 4)).order_by('fecha', 'hora')|Cita.objects.filter(asignada = False, fecha = datetime.datetime.today() + datetime.timedelta(days = 5)).order_by('fecha', 'hora')
     hoy = datetime.date.today()
     paciente = paciente
     
@@ -477,6 +485,12 @@ class CitaList3(LoginRequiredMixin, ListView):
     
     def get_queryset(self):
         return Cita.objects.filter(paciente = self.kwargs['paciente']).order_by('-fecha')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['dentista_list'] = Dentista.objects.all()
+        context['paciente'] = Paciente.objects.get(id=self.kwargs['paciente'])
+        return context
 
 @user_passes_test(lambda u: u.is_superuser)
 def ReservarCita(request, paciente, pk):
@@ -511,30 +525,53 @@ class NuevaReceta(LoginRequiredMixin, CreateView):
         return {
             'paciente':self.kwargs['paciente'],
         }
+        
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['dentista_list'] = Dentista.objects.all()
+        context['paciente'] = Paciente.objects.get(id=self.kwargs['paciente'])
+        return context
 
 class RecetaList(LoginRequiredMixin, ListView):
     model = Receta
     def get_queryset(self):
         return Receta.objects.filter(paciente = self.kwargs['paciente']).order_by('medicamento')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['dentista_list'] = Dentista.objects.all()
+        context['paciente'] = Paciente.objects.get(id=self.kwargs['paciente'])
+        return context
 
 class RecetaDelete(LoginRequiredMixin, DeleteView):
     model = Receta
     template_name= "core/categoria_delete.html"
     success_url = reverse_lazy('home')
     
-    
-class CitaUpdate(LoginRequiredMixin, UpdateView):
-    model = Cita
-    form_class = UpdateCitaForm
-    template_name = 'core/cita_update.html'
-    
-    def get_success_url(self):
-        return reverse_lazy('core:expediente', args=[self.object.paciente.id])
-    
-    def get_initial(self):
-        return {
-            'atendida':True,
-        }
+
+def CitaUpdate(request, pk):
+    cita = Cita.objects.get(id=pk)
+    dentistas = Dentista.objects.all()
+    if request.method == 'POST':
+        form = UpdateCitaForm(request.POST, request.FILES)
+        if form.is_valid():
+            
+            cita.informe = form.cleaned_data['informe']
+            cita.tratamiento = form.cleaned_data['tratamiento']
+            cita.atendida = True
+
+            cita.save()
+            
+
+            return redirect('core:expediente', cita.paciente.id)
+            
+    else:
+        form = UpdateCitaForm(instance=cita)
+        
+        
+    return render(request, 'core/cita_update.html', {'form':form, 'dentista_list':dentistas, 'cita':cita})
+
+
         
         
 class NuevoUser(LoginRequiredMixin, CreateView):

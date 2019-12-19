@@ -246,7 +246,7 @@ class CitaForm(forms.ModelForm):
         fecha = self.cleaned_data.get('fecha')
         
         if Cita.objects.filter(fecha = fecha).exists():
-            raise forms.ValidationError('Ya hay citas habilitadas para esta fecha.')
+            raise forms.ValidationError('Limite diario alcanzado. No es posible habilitar mas cupos para esta fecha.')
         else:
             return fecha
         
@@ -274,9 +274,9 @@ class UpdateCitaForm(forms.ModelForm):
         model = Cita
         fields = ['informe','tratamiento', 'atendida']
         widgets = {
-            'informe': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Biografía: '}),
+            'informe': forms.Textarea(attrs={'class':'form-control'}),
             'atendida': forms.HiddenInput()
         }
         labels = {
-            'informe':'',
+            'informe':'Informe',
         }

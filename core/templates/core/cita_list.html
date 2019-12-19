@@ -47,7 +47,7 @@
                   </thead>
 				   
                   <tbody>
-                    {% for c in citas|dictsort:'id' %}
+                    {% for c in citas|dictsort:'fecha' %}
                         <tr id={{c.id}} onMouseOver="ResaltarFila({{c.id}});" onMouseOut="RestablecerFila({{c.id}}, '')" onClick="CrearEnlace('{% url 'core:reservarcita' paciente c.id|slugify %}');">
                               <td>
                           
