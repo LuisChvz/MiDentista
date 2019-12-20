@@ -469,7 +469,7 @@ def CitaList(request, paciente):
 
 @user_passes_test(lambda u: u.is_superuser)
 def CitaList2(request):
-    citas = Cita.objects.filter(fecha = datetime.datetime.today()).order_by('fecha', 'hora')|Cita.objects.filter(fecha = datetime.datetime.today() + datetime.timedelta(days = 1)).order_by('fecha', 'hora')
+    citas = Cita.objects.filter(atendida = False, fecha = datetime.datetime.today()).order_by('fecha', 'hora')|Cita.objects.filter(atendida = False, fecha = datetime.datetime.today() + datetime.timedelta(days = 1)).order_by('fecha', 'hora')
     
     return render(request, 'core/cita_list2.html', {'citas':citas})
 @login_required

@@ -2201,11 +2201,11 @@ textarea.form-control:active {
 
 #searchModal .modal-dialog .form-control {
   border: none;
-  color: #222a42;
+  color: rgb(0, 0, 0, 0.5);
 }
 
 #searchModal .modal-dialog .form-control::placeholder {
-  color: #000000;
+  color: rgb(0, 0, 0, 0.5)
 }
 
 button,
@@ -2266,6 +2266,7 @@ h2,
   font-size: 1.6875rem;
   margin-bottom: 30px;
   font-weight: 400;
+  line-height: 0.9em;
 }
 
 h3,
@@ -2273,7 +2274,7 @@ h3,
   font-size: 1.4375rem;
   margin-bottom: 30px;
   font-weight: 400;
-  line-height: 1.4em;
+  line-height: 1em;
 }
 
 h4,

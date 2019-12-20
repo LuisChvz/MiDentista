@@ -15,45 +15,51 @@
 				</div>
 			</div>
 	    </div>
-		<div class="col-md-8">
+		<div class="col-md-7">
 			<div class="card white-content">
-				<div class="card-body">
-					<h1>{{cita.paciente.nombres}} {{cita.paciente.apellidos}}</h1>
+                <div class="card-header">
+                    <h2>{{cita.paciente.nombres}} {{cita.paciente.apellidos}}</h2>
 					<hr>
-					<table class="table table-sm" id="" width=100%>
-						<tr>
-							<td>
-								<p><font size = 5><i class="fas fa-birthday-cake"></i> &nbsp;&nbsp;&nbsp;{{cita.paciente.nacimiento}}</font></p>
-							</td>
-							<td align = right>
-								<p><font size = 5><b>Edad:</b> {{cita.paciente.edad}}</font></p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<p><font size = 5><i class="fas fa-mobile-alt"></i> &nbsp;&nbsp;&nbsp;{{cita.paciente.telefono}}</font></p>
-							</td>
-							<td align = right>
-								<p><font size = 5><i class="far fa-envelope"></i>&nbsp;&nbsp;&nbsp;{{cita.paciente.correo}}</font></h3>
-							</td>
-						</tr>					
-					</table>
-					<hr>
-				</div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive ">
+
+                        <table class="table " id="" width=100%>
+                            <tr>
+                                <td>
+                                    <p><font size = 5><i class="fas fa-birthday-cake"></i> &nbsp;{{cita.paciente.nacimiento}}</font></p>
+                                </td>
+                                <td align = right>
+                                    <p><font size = 5><i class="fas fa-mobile-alt"></i> &nbsp;{{cita.paciente.telefono}}</font></p>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><font size = 5><b>Edad:</b> {{cita.paciente.edad}}</font></p>
+                                </td>
+                                <td align = right>
+                                    <p><font size = 5><i class="far fa-envelope"></i>&nbsp;{{cita.paciente.correo}}</font></h3>
+                                </td>
+                            </tr>					
+                        </table>
+                        <br><hr>
+                    </div>
+                </div>
 			</div>
 	    </div>
 		<div class="col-md-4">
 			<div class="card white-content">
 				<div class="card-body">
 					<h2> Alergias</h2>
-					<h3>{{cita.paciente.alergias.nombre}}</h3>
+					<h3>{% for alergia in cita.paciente.alergias.all %}{{ alergia.nombre }}<hr>{% endfor %}</h3>
 				</div>
 			</div>
 	    </div>
-		<div class="col-md-8">
+		<div class="col-md-7">
 			<div class="card white-content">
-				<div class="card-header" align=center>
-					<h4><b>Agregar informe</b></h4>
+				<div class="card-header">
+					<h2>Agregar informe</h2>
 				</div>
 				<div class="card-body">
 
